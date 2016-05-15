@@ -1,11 +1,22 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<html ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Stork: Mountain Delivery Made Easy</title>
+    <script src="/javascripts/libs/angular.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+    <products-list>
+
+    </products-list>
+
+
+    <script src="/javascripts/angularApp.js"></script>
+    <script src="/javascripts/components/ProductList/ProductsList.js"></script>
+    <script src="/javascripts/components/ProductList/ProductsListController.js"></script>
+    <script src="/javascripts/components/Product/Product.js"></script>
+    <script src="/javascripts/components/Product/ProductController.js"></script>
+
+</body>
 </html>

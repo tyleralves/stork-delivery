@@ -1,0 +1,33 @@
+<div class="error-container" ng-show="$ctrl.errorMessage">
+    <span class="error">{{ $ctrl.errorMessage }}</span>
+</div>
+
+<div class="section-container favorites-container">
+    <div class="section-header favorite" ng-repeat="favorite in $ctrl.favoritesList">
+        <div>
+            {{ favorite }}
+        </div>
+        <a href="" class="product-fav-btn" ng-click="$ctrl.removeFavorite($index)">&#215;</a>
+    </div>
+</div>
+
+<div class="section-container product-container">
+    <product
+        class="section-header product"
+        ng-repeat="product in $ctrl.productList"
+        product="product"
+        index="$index"
+        on-product-selected="$ctrl.addCart(product, quantity)">
+    </product>
+</div>
+
+<div class="section-container cart-container">
+    <div class="section-header cart" ng-repeat="item in $ctrl.cartList">
+        <div>
+            {{ item.name }} - {{ item.quantity }}
+        </div>
+        <div class="product-selection">
+            <a href="" class="product-fav-btn" ng-click="$ctrl.removeCart($index)">&#215;</a>
+        </div>
+    </div>
+</div>

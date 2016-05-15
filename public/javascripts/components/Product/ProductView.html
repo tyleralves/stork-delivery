@@ -1,0 +1,10 @@
+<div class="product-info">
+    <div>{{ $ctrl.product.name }} - <span>{{ $ctrl.product.price | currency }}</span></div>
+    <div><a href="">{{ $ctrl.product.brand }}</a></div>
+</div>
+<div class="product-selection">
+    <label for="product-quantity-{{$ctrl.index}}">Quantity: </label>
+    <input id="product-quantity-{{$ctrl.index}}" type="number" ng-model="quantity" ng-init="quantity = 0">
+    {{quantity}}
+    <a href="" class="product-cart-btn" ng-click="$ctrl.onProductSelected({product: $ctrl.product, quantity: quantity}); quantity = 0;">+</a>
+</div>

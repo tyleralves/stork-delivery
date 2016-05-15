@@ -1,8 +1,26 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.section-header {
+    display: flex;
+    margin: 20px;
+    border: 1px solid black;
 }
 
-a {
-  color: #00B7FF;
+.product-selection {
+    margin-left: auto;
+    margin-right: 25px;
+    margin-bottom: auto;
+    margin-top: auto;
+}
+
+.product-cart-btn {
+    text-decoration: none;
+    font-size: 22px;
+    color: lightblue;
+}
+
+.product-cart-btn:hover {
+    color: darkblue;
+}
+
+.error {
+    color: red;
 }
