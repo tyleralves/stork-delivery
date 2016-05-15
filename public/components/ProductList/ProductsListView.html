@@ -2,6 +2,23 @@
     <span class="error">{{ $ctrl.errorMessage }}</span>
 </div>
 
+<div class="product-test-container" ng-show="$ctrl.productTest">
+    <span class="product-test">{{ $ctrl.productTest }}</span>
+</div>
+
+<div>
+    <form name="add-product-form" ng-submit="$ctrl.addProduct()">
+        <input type="text" placeholder="Product Name" ng-model="$ctrl.addName">
+        <input type="text" placeholder="Brand" ng-model="$ctrl.addBrand">
+        <input type="text" placeholder="Category" ng-model="$ctrl.addCategory">
+        <input type="number" placeholder="Price" ng-model="$ctrl.addPrice">
+        <input type="text" placeholder="description" ng-model="$ctrl.addDescription">
+        <button type="submit">Submit Product</button>
+    </form>
+</div>
+
+
+<!-- Favorites Implementation
 <div class="section-container favorites-container">
     <div class="section-header favorite" ng-repeat="favorite in $ctrl.favoritesList">
         <div>
@@ -10,6 +27,8 @@
         <a href="" class="product-fav-btn" ng-click="$ctrl.removeFavorite($index)">&#215;</a>
     </div>
 </div>
+-->
+
 
 <div class="section-container product-container">
     <product

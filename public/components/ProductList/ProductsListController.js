@@ -1,14 +1,41 @@
 /**
  * Created by Tyler on 5/11/2016.
  */
-function ProductsListController() {
+function ProductsListController($http) {
   var ctrl = this;
+  ctrl.errorMessage = '';
+
+  //addProduct function to add single products to 'Product' collection
+  ctrl.productTest = {};
+
+  ctrl.addName = '';
+  ctrl.addBrand = '';
+  ctrl.addCategory = '';
+  ctrl.addPrice = 0;
+  ctrl.addDescription = '';
+  
+  ctrl.addProduct = function(){
+    var newProduct = {
+      name: ctrl.addName,
+      brand: ctrl.addBrand,
+      category: ctrl.addCategory,
+      price: ctrl.addPrice,
+      description: ctrl.addDescription
+    };
+    $http
+      .post('/products',newProduct)
+      .then(function addProductSuccess(product){
+        console.log(product);
+        ctrl.productTest = product;
+      }, function addProductError(error){
+        ctrl.errorMessage = 'Could not add product!';
+      });
+  };
   
   //Cart
   ctrl.cartList = [];
   ctrl.addCart = function(product, quantity){
     if(ctrl.cartList.indexOf(product) === -1){
-      ctrl.errorMessage = '';
       console.log(ctrl);
       product.quantity = quantity;
       ctrl.cartList.push(product);
