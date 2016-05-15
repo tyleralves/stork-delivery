@@ -8,5 +8,5 @@ angular
       product: '<'
     },
     controller: 'ProductsListController',
-    templateUrl: '/javascripts/components/ProductList/ProductsListView.html'
+    templateUrl: '/components/ProductList/ProductsListView.html'
   });

@@ -10,5 +10,5 @@ angular
       onProductSelected: '&'
     },
     
-    templateUrl: '/javascripts/components/Product/ProductView.html'
+    templateUrl: '/components/Product/ProductView.html'
   });
