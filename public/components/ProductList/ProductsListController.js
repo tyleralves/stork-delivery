@@ -1,12 +1,9 @@
 /**
  * Created by Tyler on 5/11/2016.
  */
-function ProductsListController($http) {
+function ProductsListController($http, ProductFactory) {
   var ctrl = this;
   ctrl.errorMessage = '';
-
-  //addProduct function to add single products to 'Product' collection
-  ctrl.productTest = {};
 
   ctrl.addName = '';
   ctrl.addBrand = '';
@@ -25,8 +22,7 @@ function ProductsListController($http) {
     $http
       .post('/products',newProduct)
       .then(function addProductSuccess(product){
-        console.log(product);
-        ctrl.productTest = product;
+        ctrl.productList.push(product.data);
       }, function addProductError(error){
         ctrl.errorMessage = 'Could not add product!';
       });
@@ -61,9 +57,10 @@ function ProductsListController($http) {
   ctrl.removeFavorite = function(index){
     ctrl.favoritesList.splice(index,1);
   };
+  
 
-  //Products
-  ctrl.productList = [
+  //Static productList for testing view
+  /*ctrl.productList = [
     {
       name: 'Tissue (50 Ct)',
       brand: 'Kleenex',
@@ -77,7 +74,7 @@ function ProductsListController($http) {
       brand: "Trader Joe's",
       price: '4.56'
     }
-  ];
+  ];*/
 }
 
 angular

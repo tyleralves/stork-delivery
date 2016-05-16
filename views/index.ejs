@@ -4,19 +4,21 @@
     <meta charset="UTF-8">
     <title>Stork: Mountain Delivery Made Easy</title>
     <script src="/javascripts/libs/angular.js"></script>
+    <script src="/javascripts/libs/angular-ui-router.js"></script>
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-    <products-list>
+    <ui-view></ui-view>
 
-    </products-list>
 
 
     <script src="/javascripts/angularApp.js"></script>
+    <script src="/javascripts/config.js"></script>
     <script src="/components/ProductList/ProductsList.js"></script>
     <script src="/components/ProductList/ProductsListController.js"></script>
     <script src="/components/Product/Product.js"></script>
     <script src="/components/Product/ProductController.js"></script>
+    <script src="/factories/ProductFactory.js"></script>
 
 </body>
 </html>

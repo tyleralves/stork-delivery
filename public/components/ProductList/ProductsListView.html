@@ -2,10 +2,6 @@
     <span class="error">{{ $ctrl.errorMessage }}</span>
 </div>
 
-<div class="product-test-container" ng-show="$ctrl.productTest">
-    <span class="product-test">{{ $ctrl.productTest }}</span>
-</div>
-
 <div>
     <form name="add-product-form" ng-submit="$ctrl.addProduct()">
         <input type="text" placeholder="Product Name" ng-model="$ctrl.addName">

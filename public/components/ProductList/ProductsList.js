@@ -5,7 +5,7 @@ angular
   .module('app')
   .component('productsList', {
     bindings: {
-      product: '<'
+      productList: '<'
     },
     controller: 'ProductsListController',
     templateUrl: '/components/ProductList/ProductsListView.html'

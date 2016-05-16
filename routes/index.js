@@ -7,6 +7,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+
 router.route('/products')
   .get(function(req, res, next){
     Product.find(function(err, products){
@@ -22,5 +23,6 @@ router.route('/products')
       res.json(product);
     });
   });
+
 
 module.exports = router;
