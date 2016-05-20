@@ -1,14 +1,16 @@
 <div class="error-container" ng-show="$ctrl.errorMessage">
     <span class="error">{{ $ctrl.errorMessage }}</span>
 </div>
-
+<div>
+    {{ $ctrl.currentUser }}
+</div>
 <div>
     <form name="add-product-form" ng-submit="$ctrl.addProduct()">
-        <input type="text" placeholder="Product Name" ng-model="$ctrl.addName">
-        <input type="text" placeholder="Brand" ng-model="$ctrl.addBrand">
-        <input type="text" placeholder="Category" ng-model="$ctrl.addCategory">
-        <input type="number" placeholder="Price" ng-model="$ctrl.addPrice">
-        <input type="text" placeholder="description" ng-model="$ctrl.addDescription">
+        <input type="text" placeholder="Product Name" ng-model="$ctrl.newProduct.name">
+        <input type="text" placeholder="Brand" ng-model="$ctrl.newProduct.brand">
+        <input type="text" placeholder="Category" ng-model="$ctrl.newProduct.category">
+        <input type="number" placeholder="Price" ng-model="$ctrl.newProduct.price">
+        <input type="text" placeholder="description" ng-model="$ctrl.newProduct.description">
         <button type="submit">Submit Product</button>
     </form>
 </div>

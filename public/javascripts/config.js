@@ -6,7 +6,7 @@ angular
   .config(function($stateProvider, $urlRouterProvider){
     $stateProvider
       .state('home', {
-        url: '',
+        url: '/',
         resolve: {
           products: function(ProductFactory){
             return ProductFactory
@@ -15,10 +15,17 @@ angular
         },
         controller: function($scope, products){
           $scope.productList = products;
-          console.log($scope.productList);
         },
         template:'<products-list product-list = "productList"></products-list>'
         //templateUrl: 'components/ProductList/ProductListView.html'
+      })
+      .state('register', {
+        url: '/register',
+        template: '<register></register>'
+      })
+      .state('login', {
+        url:'/login',
+        template: '<login></login>'
       });
     $urlRouterProvider.otherwise('/');
   });

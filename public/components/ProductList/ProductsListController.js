@@ -1,38 +1,22 @@
 /**
  * Created by Tyler on 5/11/2016.
  */
-function ProductsListController($http, ProductFactory) {
+function ProductsListController($http, ProductFactory, UserFactory) {
   var ctrl = this;
   ctrl.errorMessage = '';
+  ctrl.newProduct = {};
 
-  ctrl.addName = '';
-  ctrl.addBrand = '';
-  ctrl.addCategory = '';
-  ctrl.addPrice = 0;
-  ctrl.addDescription = '';
+  ctrl.currentUser = UserFactory.currentUser();   //Issue when no user logged in 
   
-  ctrl.addProduct = function(){
-    var newProduct = {
-      name: ctrl.addName,
-      brand: ctrl.addBrand,
-      category: ctrl.addCategory,
-      price: ctrl.addPrice,
-      description: ctrl.addDescription
-    };
-    $http
-      .post('/products',newProduct)
-      .then(function addProductSuccess(product){
-        ctrl.productList.push(product.data);
-      }, function addProductError(error){
-        ctrl.errorMessage = 'Could not add product!';
-      });
+  
+  ctrl.addProduct = function () {
+    ProductFactory.addProduct(ctrl.newProduct);
   };
   
   //Cart
   ctrl.cartList = [];
   ctrl.addCart = function(product, quantity){
     if(ctrl.cartList.indexOf(product) === -1){
-      console.log(ctrl);
       product.quantity = quantity;
       ctrl.cartList.push(product);
     }else{

@@ -5,8 +5,12 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-require('./models/Products');
+var passport = require('passport');
 
+require('./models/Products');
+require('./models/Users');
+//passportjs configuration
+require('./config/passport');
 
 mongoose.connect('mongodb://localhost/stork');
 
@@ -27,6 +31,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+//Initializing passportjs
+app.use(passport.initialize());
+
 
 app.use('/', routes);
 //Passes all routing to Angular
