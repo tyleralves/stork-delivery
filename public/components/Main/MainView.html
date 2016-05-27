@@ -1,0 +1,16 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <a ui-sref="home">Home</a>
+            <a ng-hide="$ctrl.isLoggedIn()" ui-sref="register">Register</a>
+            <a ng-hide="$ctrl.isLoggedIn()" ui-sref="login">Login</a>
+            <a ng-show="$ctrl.isLoggedIn()" ng-click="$ctrl.logOut();" ui-sref="home">LogOut</a>
+            <a ng-show="$ctrl.isLoggedIn()" ui-sref="cart">My Cart</a>
+            <div ng-show="$ctrl.isLoggedIn();">
+                <span>Welcome {{ $ctrl.currentUser() }}</span>
+            </div>
+            <ui-view></ui-view>
+        </div>
+    </div>
+
+</div>

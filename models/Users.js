@@ -10,7 +10,10 @@ var UserSchema = new mongoose.Schema({
   username: {type: String, lowercase: true, unique: true},
   salt: String,
   hash: String,
-  cart: [{type: mongoose.Schema.Types.ObjectId, ref: 'Product' }]
+  cart: [{
+    quantity: {type: Number, min: 1},
+    product:{type: mongoose.Schema.Types.ObjectId, ref: 'Product' }
+  }]
 });
 
 
@@ -30,10 +33,10 @@ UserSchema.methods.generateJWT = function(){
   exp.setDate(today.getDate()+60);
 
   return jwt.sign({
-    id: this._id,
+    _id: this._id,
     username: this.username,
     exp: parseInt(exp.getTime()/1000)
-  }, 'secret');
+  }, 'SECRET');
 };
 
 

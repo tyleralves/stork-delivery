@@ -6,8 +6,11 @@ angular
   .component('product', {
     bindings: {
       product: '<',
+      quantity: '<',
       index: '<',
-      onProductSelected: '&'
+      onProductSelected: '&',
+      onProductRemoved: '&',
+      onQuantityChange: '&'
     },
     
     templateUrl: '/components/Product/ProductView.html'

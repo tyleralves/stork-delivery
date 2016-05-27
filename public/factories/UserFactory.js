@@ -10,8 +10,6 @@ function UserFactory($http, $window){
   };
 
   UserFactory.getToken = function(){
-    var token = $window.localStorage['stork-delivery-token'];
-    console.log(JSON.parse($window.atob(token.split('.')[1])));
     return $window.localStorage['stork-delivery-token'];
   };
 
@@ -27,16 +25,19 @@ function UserFactory($http, $window){
   };
 
   UserFactory.currentUser = function(){
-    var token = UserFactory.getToken();
-    var payload = JSON.parse($window.atob(token.split('.')[1]));
+    if(UserFactory.isLoggedIn()){
+      var token = UserFactory.getToken();
+      var payload = JSON.parse($window.atob(token.split('.')[1]));
 
-    return payload.username;
+      return payload.username;
+    }
   };
 
   UserFactory.register = function(user){
     return $http
       .post('/register', user)
       .then(function(response){
+        console.log(response.data.token);
         UserFactory.saveToken(response.data.token);
         return response;
       }, function(error){
@@ -49,6 +50,7 @@ function UserFactory($http, $window){
       .post('/login', user)
       .then(function(response){
         UserFactory.saveToken(response.data.token);
+        return response;
       }, function(error){
         return error;
       });

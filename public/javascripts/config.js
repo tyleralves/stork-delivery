@@ -26,6 +26,18 @@ angular
       .state('login', {
         url:'/login',
         template: '<login></login>'
+      })
+      .state('cart', {
+        url:'/cart',
+        resolve: {
+          cartList: function(CartFactory){
+            return CartFactory.getCart();
+          }
+        },
+        controller: function($scope, cartList){
+          $scope.cartList = cartList;
+        },
+        template: '<cart cart-list = "cartList"></cart>'
       });
     $urlRouterProvider.otherwise('/');
   });

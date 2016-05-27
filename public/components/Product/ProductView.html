@@ -1,10 +1,27 @@
-<div class="product-info">
-    <div>{{ $ctrl.product.name }} - <span>{{ $ctrl.product.price | currency }}</span></div>
-    <div><a href="">{{ $ctrl.product.brand }}</a></div>
-</div>
-<div class="product-selection">
-    <label for="product-quantity-{{$ctrl.index}}">Quantity: </label>
-    <input id="product-quantity-{{$ctrl.index}}" type="number" ng-model="quantity" ng-init="quantity = 0">
-    {{quantity}}
-    <a href="" class="product-cart-btn" ng-click="$ctrl.onProductSelected({product: $ctrl.product, quantity: quantity}); quantity = 0;">+</a>
+<div class="row product-row">
+    <div class="product-info-col col-md-6">
+        <div>
+            <a href="" class="product-name-text">{{ $ctrl.product.name }}</a></div>
+        <div>By <a href="">{{ $ctrl.product.brand }}</a></div>
+    </div>
+    <div class="product-price-col col-md-3">
+        <span class="product-price-text">{{ $ctrl.product.price | currency }}</span>
+    </div>
+    <div class="product-selection" ng-class="{'col-md-2': !$ctrl.quantity}" ng-hide="$ctrl.quantity">
+        <label for="product-quantity-{{$ctrl.index}}">Quantity: </label>
+        <input id="product-quantity-{{$ctrl.index}}" type="number" ng-model="quantity" ng-init="quantity = 0">
+        {{ quantity }}
+    </div>
+    <div class="product-selection" ng-class="{'col-md-2': $ctrl.quantity}" ng-show="$ctrl.quantity">
+        <label for="product-quantity-{{$ctrl.index}}">Quantity: </label>
+        <input id="product-quantity-{{$ctrl.index}}"
+               type="number"
+               ng-model="$ctrl.quantity"
+               ng-blur="$ctrl.onQuantityChange({index: $ctrl.index, quantity: $ctrl.quantity});">
+            {{ $ctrl.quantity }}
+    </div>
+    <div class="product-cart-col col-md-1">
+        <a class="product-cart-btn" ng-show="!$ctrl.quantity" ng-click="$ctrl.onProductSelected({product: $ctrl.product, quantity: quantity}); quantity = 0;">+</a>
+        <a class="product-cart-btn" ng-show="$ctrl.quantity" ng-click="$ctrl.onProductRemoved()">&#215;</a>
+    </div>
 </div>

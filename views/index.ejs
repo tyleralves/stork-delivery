@@ -5,19 +5,20 @@
     <title>Stork: Mountain Delivery Made Easy</title>
     <script src="/javascripts/libs/angular.js"></script>
     <script src="/javascripts/libs/angular-ui-router.js"></script>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-    <a ui-sref="home">Home</a>
-    <a ui-sref="register">Register</a>
-    <a ui-sref="login">Login</a>
-    <log-out></log-out>
-    <ui-view></ui-view>
+
+    <main></main>
+
 
 
 
     <script src="/javascripts/angularApp.js"></script>
     <script src="/javascripts/config.js"></script>
+    <script src="/components/Main/Main.js"></script>
+    <script src="/components/Main/MainController.js"></script>
     <script src="/components/ProductList/ProductsList.js"></script>
     <script src="/components/ProductList/ProductsListController.js"></script>
     <script src="/components/Product/Product.js"></script>
@@ -27,9 +28,10 @@
     <script src="/components/Register/RegisterController.js"></script>
     <script src="/components/Login/Login.js"></script>
     <script src="/components/Login/LoginController.js"></script>
-    <script src="/components/LogOut/LogOut.js"></script>
-    <script src="/components/LogOut/LogOutController.js"></script>
+    <script src="/components/Cart/Cart.js"></script>
+    <script src="/components/Cart/CartController.js"></script>
     <script src="/factories/UserFactory.js"></script>
+    <script src="/factories/CartFactory.js"></script>
 
 </body>
 </html>

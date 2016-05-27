@@ -2,8 +2,12 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var passport = require('passport');
+var expressJwt = require('express-jwt');
+var jwt = require('jsonwebtoken');
 var Product = mongoose.model('Product');
 var User = mongoose.model('User');
+
+var auth = expressJwt({secret: 'SECRET', userProperty: 'payload'});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -53,6 +57,52 @@ router.route('/products')
     product.save(function(err, product){
       if(err) {return next(err);}
       res.json(product);
+    });
+  });
+
+router.route('/cart')
+  .get(auth, function(req, res, next){
+    console.log(req.payload);
+    User.findOne({username: req.payload.username}, function(err, user){
+      user.populate('cart.product', function(err, user){
+        if(err){console.log(err);}
+        res.json(user.cart);
+      })
+    });
+  })
+  .post(auth, function(req, res, next){
+    if(req.body.quantity === 0){
+      User.findOne({username: req.payload.username}, function(err, user){
+        user.cart.splice(req.body.index, 1);
+        user.save(function(err, user){
+          console.log(user.cart);
+          //res.json({message: 'Item removed from cart'});
+        });
+      })
+    }
+    var newCartItem = {
+      product: req.body._id,
+      quantity: req.body.quantity
+    };
+    User.update({username: req.payload.username, 'cart.product': {$ne: newCartItem.product}},
+      {$push: {cart: newCartItem}},
+      function(err, user){
+        if(err){console.log(err);}
+        console.log(err, user);
+        if(!user.nModified){
+          res.json({message: 'Item is already in your cart.'});
+        }else{
+          res.json({message: 'Item added to cart'});
+        }
+      });
+  })
+  .put(auth, function(req, res, next){
+    User.findOne({username: req.payload.username}, function(err, user){
+      console.log(req.body.quantity);
+      user.cart[req.body.index].quantity = req.body.quantity;
+      user.save(function(err, user){
+        res.json({message: 'Cart quantity changed'});
+      })
     });
   });
 
