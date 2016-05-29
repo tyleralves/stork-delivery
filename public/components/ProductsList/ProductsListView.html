@@ -1,6 +1,21 @@
-<div class="error-container" ng-show="$ctrl.errorMessage">
-    <span class="error">{{ $ctrl.errorMessage }}</span>
+<div class="error-container" ng-show="$ctrl.message">
+    <span class="error">{{ $ctrl.message }}</span>
 </div>
+
+
+<div class="section-container product-container">
+    <div class="row product-row">
+        <product-square
+                class="section-header product"
+                ng-repeat="product in $ctrl.productList"
+                product="product"
+                index="$index"
+                on-product-selected="$ctrl.addCart(product, quantity);">
+        </product-square>
+    </div>
+
+</div>
+
 <div>
     {{ $ctrl.currentUser }}
 </div>
@@ -26,15 +41,3 @@
     </div>
 </div>
 -->
-
-
-<div class="section-container product-container">
-    <product
-        class="section-header product"
-        ng-repeat="product in $ctrl.productList"
-        product="product"
-        index="$index"
-        on-product-selected="$ctrl.addCart(product, quantity);">
-    </product>
-</div>
-

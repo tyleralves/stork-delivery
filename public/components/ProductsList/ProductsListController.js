@@ -1,9 +1,9 @@
 /**
  * Created by Tyler on 5/11/2016.
  */
-function ProductsListController($http, ProductFactory, CartFactory) {
+function ProductsListController(ProductFactory, CartFactory) {
   var ctrl = this;
-  ctrl.errorMessage = '';
+  ctrl.productList = ProductFactory.productList;
   ctrl.newProduct = {};
   
   ctrl.addProduct = function () {
@@ -12,9 +12,19 @@ function ProductsListController($http, ProductFactory, CartFactory) {
   
   //Cart
   ctrl.cartList = [];
-  ctrl.addCart = CartFactory.addCart;
+  ctrl.addCart = function(product, quantity) {
+    CartFactory.addCart(product, quantity)
+      .then(function(){
+        ctrl.message = CartFactory.message;
+      });
+  };
     
-    
+  ProductFactory.getProducts()
+    .then(function(){
+      ctrl.productList = ProductFactory.productList;
+    });
+  
+  
   
   //Favorites
   ctrl.favoritesList = [];

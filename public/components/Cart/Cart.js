@@ -5,8 +5,5 @@ angular
   .module('app')
   .component('cart', {
     controller: 'CartController',
-    bindings: {
-      cartList: '<'
-    },
     templateUrl: '/components/Cart/CartView.html'
   });

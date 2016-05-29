@@ -1,9 +1,10 @@
 /**
  * Created by Tyler on 5/21/2016.
  */
-function CartFactory($http, UserFactory){
+function CartFactory($http, $location, UserFactory){
   var CartFactory = {};
   CartFactory.cartList = [];
+  CartFactory.httpResponse = {};
   
   CartFactory.getCart = function(){
     return $http
@@ -11,31 +12,23 @@ function CartFactory($http, UserFactory){
         headers: {authorization: 'Bearer ' + UserFactory.getToken()}
       })
       .then(function successCartGet(cartResponse){
-        console.log(cartResponse.data);
         angular.copy(cartResponse.data, CartFactory.cartList);
-        return CartFactory.cartList;
       })
   };
   
   CartFactory.addCart = function(product, quantity){
-    if(CartFactory.cartList.indexOf(product.name) === -1){                          //Unsuccessful check for "product already exists"
-      product.quantity = quantity;
-      return $http
-        .post('/cart', product, {
-          headers: {authorization: 'Bearer ' + UserFactory.getToken()}
-        })
-        .then(function successCartPost(response){
-          CartFactory.errorMessage = response.data.message;
-          console.log(response.data.message);
-          //CartFactory.cartList.push(product);
-        });
-    }else{
-      CartFactory.errorMessage = "Your cart already contains " + product.name + " by " + product.brand +
-        ". Please visit your cart to adjust item quantities.";
-    }
+    product.quantity = quantity;
+    return $http
+      .post('/cart', product, {
+        headers: {authorization: 'Bearer ' + UserFactory.getToken()}
+      })
+      .then(function successCartPost(response){
+        CartFactory.message = response.data.message;
+      });
   };
 
   CartFactory.removeCart = function(product, index){
+    //$location.search('function', 'remove');
     product.quantity = 0;
     product.index = index;
     return $http
@@ -44,6 +37,7 @@ function CartFactory($http, UserFactory){
       })
       .then(function successCartRemove(response){
         CartFactory.cartList.splice(index, 1);
+        CartFactory.message = response.data.message;
       });
   };
 

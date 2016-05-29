@@ -1,0 +1,33 @@
+<div class="col-md-4 ps-product-container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="ps-data-container">
+                <img class="ps-image" src="{{ $ctrl.product.imageSrc }}">
+                <div class="ps-details-container">
+                    <a href="" class="product-name-text">{{ $ctrl.product.name }}</a>
+                    <div>By <a href="">{{ $ctrl.product.brand }}</a></div>
+                </div>
+                <div class="ps-price-container">
+                    <span class="product-price-text">{{ $ctrl.product.price | currency }}</span>
+                </div>
+                <div class="product-selection ps-selection-container" ng-hide="$ctrl.quantity">
+                    <!-- TODO <label for="product-quantity-{{$ctrl.index}}"></label> -->
+                    <!-- TODO Set minimum number (0) for input -->
+                    <input id="product-quantity-{{$ctrl.index}}" type="number" ng-model="quantity" ng-init="quantity = 0">
+                    <a class="product-cart-btn" ng-click="$ctrl.onProductSelected({product: $ctrl.product, quantity: quantity}); quantity = 0;">+</a>
+                </div>
+                <div class="product-selection ps-selection-container" ng-show="$ctrl.quantity">
+                    <!-- TODO <label for="product-quantity-{{$ctrl.index}}"></label> -->
+                    <!-- TODO Set minimum number (1) for input -->
+                    <input id="product-quantity-{{$ctrl.index}}"
+                           type="number"
+                           ng-model="$ctrl.quantity"
+                           ng-blur="$ctrl.onQuantityChange({index: $ctrl.index, quantity: $ctrl.quantity});">
+                    <a class="product-cart-btn" ng-click="$ctrl.onProductRemoved()">&#215;</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div ng-if="($ctrl.index+1)%3 === 0" class="clearfix"></div>

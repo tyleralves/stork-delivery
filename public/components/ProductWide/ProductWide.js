@@ -1,9 +1,9 @@
 /**
- * Created by Tyler on 5/13/2016.
+ * Created by Tyler on 5/28/2016.
  */
 angular
   .module('app')
-  .component('product', {
+  .component('productWide', {
     bindings: {
       product: '<',
       quantity: '<',
@@ -12,6 +12,5 @@ angular
       onProductRemoved: '&',
       onQuantityChange: '&'
     },
-    
-    templateUrl: '/components/Product/ProductView.html'
+    templateUrl: '/components/ProductWide/ProductWideView.html'
   });

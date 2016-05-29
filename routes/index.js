@@ -75,26 +75,27 @@ router.route('/cart')
       User.findOne({username: req.payload.username}, function(err, user){
         user.cart.splice(req.body.index, 1);
         user.save(function(err, user){
-          console.log(user.cart);
-          //res.json({message: 'Item removed from cart'});
+          res.json({message: 'Item removed from cart'});
         });
       })
+    }else{
+      var newCartItem = {
+        product: req.body._id,
+        quantity: req.body.quantity
+      };
+      User.update({username: req.payload.username, 'cart.product': {$ne: newCartItem.product}},
+        {$push: {cart: newCartItem}},
+        function(err, user){
+          if(err){console.log(err);}
+          console.log(err, user);
+          if(!user.nModified){
+            res.json({message: 'Item is already in your cart.'});
+          }else{
+            res.json({message: 'Item added to cart'});
+          }
+        });
     }
-    var newCartItem = {
-      product: req.body._id,
-      quantity: req.body.quantity
-    };
-    User.update({username: req.payload.username, 'cart.product': {$ne: newCartItem.product}},
-      {$push: {cart: newCartItem}},
-      function(err, user){
-        if(err){console.log(err);}
-        console.log(err, user);
-        if(!user.nModified){
-          res.json({message: 'Item is already in your cart.'});
-        }else{
-          res.json({message: 'Item added to cart'});
-        }
-      });
+    
   })
   .put(auth, function(req, res, next){
     User.findOne({username: req.payload.username}, function(err, user){

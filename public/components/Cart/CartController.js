@@ -4,17 +4,21 @@
 function CartController(CartFactory){
   var ctrl = this;
   
-  ctrl.error = '';
+  ctrl.cartList = CartFactory.cartList;
   
-  //ctrl.cartList = CartFactory.cartList;
-  ctrl.removeCart = CartFactory.removeCart;
+  ctrl.removeCart = function(product, index){
+    CartFactory.removeCart(product, index)
+      .then(function(){
+        ctrl.message = CartFactory.message;
+      });
+  };
   
   ctrl.changeCartQuantity = CartFactory.changeCartQuantity;
   
-  ctrl.getError = function(){
-    ctrl.error = CartFactory.errorMessage;
-    return ctrl.error;
-  };
+  CartFactory.getCart()
+    .then(function(){
+      ctrl.cartList = CartFactory.cartList;
+    });
 }
 
 angular

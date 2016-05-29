@@ -10,7 +10,6 @@ function ProductFactory($http){
         .get('/products')
         .then(function(products){
           angular.copy(products.data, ProductFactory.productList);
-          return ProductFactory.productList;
         });
     };
     ProductFactory.addProduct = function(newProduct){

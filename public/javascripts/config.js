@@ -7,17 +7,7 @@ angular
     $stateProvider
       .state('home', {
         url: '/',
-        resolve: {
-          products: function(ProductFactory){
-            return ProductFactory
-              .getProducts();
-          }
-        },
-        controller: function($scope, products){
-          $scope.productList = products;
-        },
-        template:'<products-list product-list = "productList"></products-list>'
-        //templateUrl: 'components/ProductList/ProductListView.html'
+        template:'<products-list></products-list>'
       })
       .state('register', {
         url: '/register',
@@ -27,17 +17,17 @@ angular
         url:'/login',
         template: '<login></login>'
       })
+      .state('productList', {
+        url:'/products',
+        template:'<products-list></products-list>'
+      })
       .state('cart', {
         url:'/cart',
-        resolve: {
-          cartList: function(CartFactory){
-            return CartFactory.getCart();
-          }
-        },
-        controller: function($scope, cartList){
-          $scope.cartList = cartList;
-        },
-        template: '<cart cart-list = "cartList"></cart>'
+        template: '<cart></cart>'
+      })
+      .state('deals', {
+        url: '/deals',
+        template: '<deals></deals>'
       });
     $urlRouterProvider.otherwise('/');
   });

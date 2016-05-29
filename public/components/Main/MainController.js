@@ -3,7 +3,11 @@
  */
 function MainController(UserFactory){
   var ctrl = this;
-  
+
+  //Navbar
+  ctrl.navCollapsed = true;
+
+  //User
   ctrl.currentUser = UserFactory.currentUser;
   ctrl.isLoggedIn = UserFactory.isLoggedIn;
   ctrl.logOut = UserFactory.logOut;

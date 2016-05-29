@@ -1,0 +1,27 @@
+<div class="row pw-product-row">
+    <div class="pw-product-col col-md-6">
+        <div>
+            <img class="pw-image" src="{{ $ctrl.product.imageSrc }}">
+            <div><a href="" class="product-name-text">{{ $ctrl.product.name }}</a></div>
+            <div>By <a href="">{{ $ctrl.product.brand }}</a></div>
+        </div>
+    </div>
+    <div class="pw-product-col col-md-3">
+        <span class="product-price-text">{{ $ctrl.product.price | currency }}</span>
+    </div>
+    <div class="product-selection pw-product-col" ng-class="{'col-md-3': !$ctrl.quantity}" ng-hide="$ctrl.quantity">
+        <!-- TODO <label for="product-quantity-{{$ctrl.index}}"></label> -->
+        <!-- TODO Set minimum number (0) for input -->
+        <input id="product-quantity-{{$ctrl.index}}" type="number" min="1" ng-model="quantity" ng-init="quantity = 0">
+        <a class="product-cart-btn" ng-click="$ctrl.onProductSelected({product: $ctrl.product, quantity: quantity}); quantity = 0;">+</a>
+    </div>
+    <div class="product-selection pw-product-col" ng-class="{'col-md-3': $ctrl.quantity}" ng-show="$ctrl.quantity">
+        <!-- TODO <label for="product-quantity-{{$ctrl.index}}"></label> -->
+        <input id="product-quantity-{{$ctrl.index}}"
+               type="number"
+               min="1"
+               ng-model="$ctrl.quantity"
+               ng-blur="$ctrl.onQuantityChange({index: $ctrl.index, quantity: $ctrl.quantity});">
+        <a class="product-cart-btn" ng-click="$ctrl.onProductRemoved()">&#215;</a>
+    </div>
+</div>

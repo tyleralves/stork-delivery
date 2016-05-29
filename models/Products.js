@@ -8,7 +8,8 @@ var ProductSchema = new mongoose.Schema({
   brand: String,
   category: String,
   price: Number,
-  description: String
+  description: String,
+  deal: Boolean
 });
 
 mongoose.model('Product', ProductSchema);
