@@ -7,9 +7,14 @@ function ProductsListController(ProductFactory, CartFactory) {
   ctrl.newProduct = {};
   
   ctrl.addProduct = function () {
-    ProductFactory.addProduct(ctrl.newProduct);
+    ProductFactory.addProduct(ctrl.newProduct)
+      .then(function(){
+        ctrl.message = ProductFactory.message;
+      });
   };
-  
+
+
+
   //Cart
   ctrl.cartList = [];
   ctrl.addCart = function(product, quantity) {

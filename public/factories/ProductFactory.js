@@ -12,13 +12,15 @@ function ProductFactory($http){
           angular.copy(products.data, ProductFactory.productList);
         });
     };
+  
     ProductFactory.addProduct = function(newProduct){
       return $http
         .post('/products',newProduct)
         .then(function addProductSuccess(product){
           ProductFactory.productList.push(product.data);
+          ProductFactory.message = 'Added product: ' + product.data.name;
         }, function addProductError(error){
-          ProductFactory.errorMessage = 'Could not add product!';
+          ProductFactory.message = 'Could not add product!';
         });
     };
   return ProductFactory;

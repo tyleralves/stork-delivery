@@ -13,7 +13,12 @@ function CartController(CartFactory){
       });
   };
   
-  ctrl.changeCartQuantity = CartFactory.changeCartQuantity;
+  ctrl.changeCartQuantity = function(product, index, quantity){
+    CartFactory.changeCartQuantity(product, index, quantity)
+      .then(function(response){
+        ctrl.message = CartFactory.message;
+      });
+  };
   
   CartFactory.getCart()
     .then(function(){

@@ -58,23 +58,25 @@ app.use(function(req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
+
+    if (err.name === 'UnauthorizedError') {
+      //express-jwt user auth error
+      res.status(401).json({message: 'Please log in to add items to your cart.'});
+    }else{
+      //default error
+      res.status(err.status || 500);
+    }
+    
   });
 }
 
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
+  //console.log('ERROR!!!');
+  res.status(err.status || 500).json({message: 'Error!'});
 });
+
 
 
 module.exports = app;

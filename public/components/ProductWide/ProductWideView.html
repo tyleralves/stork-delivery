@@ -21,7 +21,8 @@
                type="number"
                min="1"
                ng-model="$ctrl.quantity"
-               ng-blur="$ctrl.onQuantityChange({index: $ctrl.index, quantity: $ctrl.quantity});">
+               ng-change="$ctrl.onQuantityChange({product: $ctrl.product, index: $ctrl.index, quantity: $ctrl.quantity});"
+               ng-model-options="{updateOn:'blur'}">
         <a class="product-cart-btn" ng-click="$ctrl.onProductRemoved()">&#215;</a>
     </div>
 </div>

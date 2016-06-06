@@ -8,8 +8,9 @@ function DealsController(ProductFactory, CartFactory) {
 
   ctrl.addCart = function(product, quantity){
     CartFactory.addCart(product, quantity)
-      .then(function(){
+      .then(function(response){
         ctrl.message = CartFactory.message;
+        console.log(ctrl.message);
       });
   };
 

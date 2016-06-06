@@ -7,7 +7,7 @@ StartUp:
 Mongo Executables:
 cd C:\program files\mongodb\server\3.2\bin
 
-Local mongo server (now using MongoLab database):
+Local mongo server (now using MongoLab):
 mongod --dbpath C:\Users\Tyler\WebstormProjects\stork-delivery\data
 
 Features:
@@ -21,14 +21,21 @@ Features:
 
 
 TODO:
-1. Validate addCart (unique product) prior to sending server request
+1. Convert quantity text inputs to select inputs
+    - Quantity range: 1- inventory quantity
 2. Set navigation li ng-class = 'active' when clicked
-3. Refactor cart:post to split out adding and removing items
-4. Tally price total in cart
-5. Learn mongo command line
-    - Add deal to specific items using command line, or create products dashboard
-6. DealsController: More efficient to check whether productList array already exists (ie: user already visited productList page),
-    then only use ProductFactory.getProducts() (http request) if not
-    - Better to just use ProductList component altogether
-7. Refactor CartFactory.removeCart to use id rather than index                    ---> NOW
-8. Send message response if user tries to add items to cart when not logged in
+3. Tally price total in cart
+4. Use ngMessages/ $error property to display validation messages on register form
+5*. Setup pagination for productsListView, cartView, dealView
+6*. Image upload for products
+7*. Import product data from excel
+8*. Create checkout component
+9. Separate components into appropriate modules
+10. Implement payment system (paypal?)
+
+
+Completed:
+Validate addCart (unique product) prior to sending server request
+Refactor cart:post to split out adding and removing items
+Refactor CartFactory.removeCart to use id rather than index
+Send message response if user tries to add items to cart when not logged in

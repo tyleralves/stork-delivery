@@ -9,7 +9,8 @@ var ProductSchema = new mongoose.Schema({
   category: String,
   price: Number,
   description: String,
-  deal: Boolean
+  deal: Boolean,
+  quantity: Number
 });
 
 mongoose.model('Product', ProductSchema);
