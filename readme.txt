@@ -23,7 +23,7 @@ Features:
 TODO:
 1. Convert quantity text inputs to select inputs
     - Quantity range: 1- inventory quantity
-2. Set navigation li ng-class = 'active' when clicked
+
 3. Tally price total in cart
 4. Use ngMessages/ $error property to display validation messages on register form
 5*. Setup pagination for productsListView, cartView, dealView
@@ -39,3 +39,8 @@ Validate addCart (unique product) prior to sending server request
 Refactor cart:post to split out adding and removing items
 Refactor CartFactory.removeCart to use id rather than index
 Send message response if user tries to add items to cart when not logged in
+Set navigation li ng-class = 'active' when clicked
+
+Cards:
+ui-sref-active
+ng-class - complex format ex. ng-class = [item, {active: isActive, special: isSpecial}]

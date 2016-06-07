@@ -11,39 +11,37 @@
 
     <div class="collapse navbar-collapse" uib-collapse="$ctrl.navCollapsed">
         <ul class="nav navbar-nav">
-            <li class="active">
+            <li ui-sref-active="active" >
                 <a ui-sref="home">Home</a>
             </li>
-            <li>
+            <li ui-sref-active="active">
                 <a ui-sref="productList">Browse Products</a>
             </li>
-            <li>
+            <li ui-sref-active="active">
                 <a ui-sref="deals">Hot Deals</a></li>
-            <li>
+            <li ui-sref-active="active">
                 <a ui-sref="about">How it works</a>
             </li>
-            <li id="#navItemContact">
+            <li ui-sref-active="active">
                 <a ui-sref="contact">Contact</a>
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right" ng-show="$ctrl.isLoggedIn()">
-            <li>
+            <li ui-sref-active="active">
                 <a ui-sref="account">My Account</a>
             </li>
-            <li>
+            <li ui-sref-active="active">
                 <a ui-sref="cart">Cart</a>
             </li>
-            <li>
-                <a ng-click="$ctrl.logOut();" ui-sref="home">Logout</a>
+            <li ui-sref-active="active">
+                <a ng-click="$ctrl.logOut();" ui-sref="home" >Logout</a>
             </li>
-
-
         </ul>
         <ul class="nav navbar-nav navbar-right" ng-hide="$ctrl.isLoggedIn()">
-            <li>
+            <li ui-sref-active="active">
                 <a  ui-sref="login">Login</a>
             </li>
-            <li>
+            <li ui-sref-active="active">
                 <a ui-sref="register">Register</a>
             </li>
         </ul>
