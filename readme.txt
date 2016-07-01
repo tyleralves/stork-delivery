@@ -21,9 +21,6 @@ Features:
 
 
 TODO:
-1.
-
-3. Tally price total in cart
 4. Use ngMessages/ $error property to display validation messages on register form
 5*. Setup pagination for productsListView, cartView, dealView
 6*. Image upload for products
@@ -34,7 +31,8 @@ TODO:
 
 
 Completed:
-Convert quantity text inputs to select inputs
+Tally price total in cart
+Convert ProductsList and Cart quantity text inputs to select inputs
     - Quantity range: 1- inventory quantity
 Validate addCart (unique product) prior to sending server request
 Refactor cart:post to split out adding and removing items

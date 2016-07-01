@@ -46,7 +46,6 @@ function CartFactory($http, $q, $location, UserFactory, ProductFactory){
             ProductFactory.getProducts();
           }
       }, function errorCartPost(response){
-          console.log(CartFactory.cartList);
           CartFactory.message = response.data.message;
       });
   };
@@ -68,9 +67,21 @@ function CartFactory($http, $q, $location, UserFactory, ProductFactory){
         headers: {authorization: 'Bearer ' + UserFactory.getToken()}
       })
       .then(function successCartQuantity(response){
+        //Update client-side modified cartList item with new quantity so that view updates the cart quantity select
         CartFactory.cartList[index].quantity = quantity;
+        //Update client-side product available inventory so that view updates the cart quantity select (range filter maximum)
+        product.quantity = response.data.product.quantity;
+        //Update message from server routing, if available
         CartFactory.message = response.data.message;
       });
+  };
+
+  CartFactory.cartTotal = function(){
+    var i, length, total = 0;
+    for(i = 0, length = CartFactory.cartList.length; i<length; i++){
+      total += CartFactory.cartList[i].quantity * CartFactory.cartList[i].product.price;
+    }
+    return total;
   };
   
   return CartFactory;

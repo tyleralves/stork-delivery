@@ -78,15 +78,16 @@ router.post('/cartRemoveProduct', auth, function(req, res, next) {
   
   User.findOne({username: req.payload.username}, function (err, user) {
     var removeIndex = findCartIndex(user);
-    Product.update({_id: req.body.product._id}, {$inc: {quantity: user.cart[removeIndex].quantity}},//need to replace req.body.quantity with user.cart.product.quantity
+    Product.update({_id: req.body.product._id}, {$inc: {quantity: user.cart[removeIndex].quantity}},
       function (err, product) {
         if (err) {next(err);}
+        user.cart.splice(removeIndex, 1);
+        user.save(function (err, user) {
+          res.json({message: 'Item removed from cart', removeIndex: removeIndex});
+        });
       }
     );
-    user.cart.splice(removeIndex, 1);
-    user.save(function (err, user) {
-      res.json({message: 'Item removed from cart', removeIndex: removeIndex});
-    });
+    
   });
 });
   
@@ -131,10 +132,11 @@ router.post('/cartModifyQuantity', auth, function(req, res, next){
       previousQuantity = user.cart[req.body.index].quantity;
       if(product.quantity >= req.body.quantity-previousQuantity){
         product.quantity += previousQuantity-req.body.quantity;
-        product.save();
-        user.cart[req.body.index].quantity = req.body.quantity;
-        user.save(function(err, user){
-          res.json({message: 'Cart quantity changed'});
+        product.save(function(err, product){
+          user.cart[req.body.index].quantity = req.body.quantity;
+          user.save(function(err, user){
+            res.json({message: 'Cart quantity changed', product: product});
+          });
         });
       }else{
          res.json({message: 'Insufficient inventory, reduce quantity in cart'});

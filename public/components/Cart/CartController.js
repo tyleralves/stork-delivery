@@ -3,13 +3,19 @@
  */
 function CartController(CartFactory){
   var ctrl = this;
-  
-  ctrl.cartList = CartFactory.cartList;
+
+  CartFactory.getCart()
+    .then(function(){
+      ctrl.cartList = CartFactory.cartList;
+      ctrl.cartTotal = CartFactory.cartTotal();
+    });
+ 
   
   ctrl.removeCart = function(product, index){
     CartFactory.removeCart(product, index)
       .then(function(){
         ctrl.message = CartFactory.message;
+        ctrl.cartTotal = CartFactory.cartTotal();
       });
   };
   
@@ -17,13 +23,9 @@ function CartController(CartFactory){
     CartFactory.changeCartQuantity(product, index, quantity)
       .then(function(response){
         ctrl.message = CartFactory.message;
+        ctrl.cartTotal = CartFactory.cartTotal();
       });
   };
-  
-  CartFactory.getCart()
-    .then(function(){
-      ctrl.cartList = CartFactory.cartList;
-    });
 }
 
 angular
