@@ -93,10 +93,10 @@ router.post('/cartRemoveProduct', auth, function(req, res, next) {
 router.post('/cartAddProduct', auth, function(req, res, next){
   var newCartItem = {
     product: req.body._id,
-    quantity: req.body.quantity
+    quantity: req.body.quan
   };
 
-  function addCartItem(){
+  function addCartItem(product){
     User.update({username: req.payload.username, 'cart.product': {$ne: newCartItem.product}},
       {$push: {cart: newCartItem}},
       function(err, user){
@@ -104,20 +104,22 @@ router.post('/cartAddProduct', auth, function(req, res, next){
         if(!user.nModified){
           res.json({message: 'Item is already in your cart.'});
         }else{
+          product.quantity -= newCartItem.quantity;
+          product.save();
           res.json({message: 'Item added to cart', addedProduct: newCartItem});
         }
       }
     );
   }
   
-  Product.update({_id:req.body._id, quantity: {$gte: req.body.quantity}}, {$inc:{quantity: -req.body.quantity}},
+  Product.findById({_id:req.body._id, quantity: {$gte: newCartItem.quantity}}, //TODO: need to check 
     function(err, product){
       if(err) {
         return next(err);
       }else if(product.nModified === 0) {
         res.json({message: 'Product no longer has sufficient quantity in stock.'});
       }else{
-        addCartItem();
+        addCartItem(product);
       }
   });
 });

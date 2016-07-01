@@ -12,11 +12,10 @@
                 </div>
                 <div class="product-selection ps-selection-container" ng-hide="$ctrl.quantity">
                     <!-- TODO <label for="product-quantity-{{$ctrl.index}}"></label> -->
-                    <input id="product-quantity-{{$ctrl.index}}"
-                           type="number" ng-model="quantity"
-                           min="1"
-                           ng-init="quantity = 0">
-                    <a class="product-cart-btn" ng-click="$ctrl.onProductSelected({product: $ctrl.product, quantity: quantity}); quantity = 0;">+</a>
+                    <select ng-model="quantity"
+                            ng-options="n for n in [] | range:1:$ctrl.product.quantity<90?$ctrl.product.quantity:90">
+                    </select>
+                    <a class="product-cart-btn" ng-click="$ctrl.onProductSelected({product: $ctrl.product, quantity: quantity}); quantity = 0">+</a>
                 </div>
                 <div class="product-selection ps-selection-container" ng-show="$ctrl.quantity">
                     <!-- TODO <label for="product-quantity-{{$ctrl.index}}"></label> -->

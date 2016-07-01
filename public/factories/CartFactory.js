@@ -1,7 +1,7 @@
 /**
  * Created by Tyler on 5/21/2016.
  */
-function CartFactory($http, $q, $location, UserFactory){
+function CartFactory($http, $q, $location, UserFactory, ProductFactory){
   var CartFactory = {};
   CartFactory.cartList = [];
   CartFactory.httpResponse = {};
@@ -32,7 +32,7 @@ function CartFactory($http, $q, $location, UserFactory){
       });
     }
     
-    product.quantity = quantity;
+    product.quan = quantity;
     return $http
       .post('/cartAddProduct', product, {
         headers: {authorization: 'Bearer ' + UserFactory.getToken()}
@@ -43,6 +43,7 @@ function CartFactory($http, $q, $location, UserFactory){
           //The response will include the addedProduct property only if the product didn't already exist in the user's cart
           if(response.data.hasOwnProperty('addedProduct')){
             CartFactory.cartList.push(response.data.addedProduct);
+            ProductFactory.getProducts();
           }
       }, function errorCartPost(response){
           console.log(CartFactory.cartList);
