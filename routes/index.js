@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var passport = require('passport');
+var request = require('request');
 var Q = require('q');
 var expressJwt = require('express-jwt');
 var jwt = require('jsonwebtoken');
@@ -40,19 +41,18 @@ router.post('/login', function(req,res,next){
   })(req, res, next);
 });
 
+
 router.route('/products')
   .get(function(req, res, next){
-    Product.find(function(err, products){
-      if(err){return next(err);}
-      res.json(products);
-    });
-  })
-  .post(function(req, res, next){
-    var product = new Product(req.body);
-
-    product.save(function(err, product){
-      if(err) {return next(err);}
-      res.json(product);
+    var queryUrl = req.query.page;
+    //Walmart api url
+    var productUrl = "http://api.walmartlabs.com" + queryUrl;
+    request({
+      url: productUrl,
+      json: true
+    }, function (error, response, body) {
+      console.log(body);
+      res.json(body);
     });
   });
 
@@ -113,7 +113,7 @@ router.post('/cartAddProduct', auth, function(req, res, next){
     );
   }
   
-  Product.findById({_id:req.body._id, quantity: {$gte: newCartItem.quantity}}, //TODO: need to check 
+  Product.findById({_id:req.body._id, quantity: {$gte: newCartItem.quantity}},
     function(err, product){
       if(err) {
         return next(err);

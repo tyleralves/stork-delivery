@@ -18,7 +18,7 @@ function CartFactory($http, $q, $location, UserFactory, ProductFactory){
   
   CartFactory.addCart = function(product, quantity){
     //Client side validation to determine if product is already in user's cart
-    //Note: Only performed if CartFactory.cartList has already been populated
+    //Only perform if CartFactory.cartList has already been populated
     if(CartFactory.cartList.length && product._id === CartFactory.cartList[0].product._id){
       CartFactory.message = "Item is already in your cart.";
       return $q(function(resolve,reject){

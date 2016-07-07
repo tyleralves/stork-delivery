@@ -89,6 +89,8 @@
 .ps-data-container {
   border: 1px solid rgba(0,0,0,.2);
   height: 350px;
+  display: flex;
+  flex-direction: column;
 }
 
 .ps-selection-container {
@@ -112,8 +114,9 @@ product-wide >.product-row {
 }
 
 .ps-image {
-  width: 100%;
   height: 200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 

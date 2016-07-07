@@ -43,6 +43,7 @@ app.use('/', routes);
 app.all('/*', function(req, res, next){
   res.render('index.ejs');
 });
+
 app.use('/users', users);
 
 // catch 404 and forward to error handler

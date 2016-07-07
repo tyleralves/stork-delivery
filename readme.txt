@@ -21,16 +21,11 @@ Features:
 
 
 TODO:
-4. Use ngMessages/ $error property to display validation messages on register form
-5*. Setup pagination for productsListView, cartView, dealView
-6*. Image upload for products
-7*. Import product data from excel
 8*. Create checkout component
-9. Separate components into appropriate modules
-10. Implement payment system (paypal?)
 
 
 Completed:
+Query product data from Walmart API
 Tally price total in cart
 Convert ProductsList and Cart quantity text inputs to select inputs
     - Quantity range: 1- inventory quantity

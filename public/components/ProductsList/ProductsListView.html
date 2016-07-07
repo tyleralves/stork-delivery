@@ -1,7 +1,11 @@
 <div class="error-container" ng-show="$ctrl.message">
     <span class="error">{{ $ctrl.message }}</span>
 </div>
-
+<span style="color:red" ng-show="$ctrl.loading">{{$ctrl.loading}}</span>
+<div ng-hide="$ctrl.loading">
+    <a ng-show="$ctrl.prevPage" ng-click="$ctrl.getProducts(-1)">Previous Page</a>
+    <a ng-click="$ctrl.getProducts(1)">Next Page</a>
+</div>
 
 <div class="section-container product-container">
     <div class="row product-row">
@@ -13,12 +17,14 @@
                 on-product-selected="$ctrl.addCart(product, quantity);">
         </product-square>
     </div>
-
 </div>
 
-<div>
-    {{ $ctrl.currentUser }}
+<div ng-hide="$ctrl.loading">
+    <a ng-show="$ctrl.prevPage" ng-click="$ctrl.getProducts(-1)">Previous Page</a>
+    <a ng-click="$ctrl.getProducts(1)">Next Page</a>
 </div>
+
+<!--
 <div>
     <form name="add-product-form" ng-submit="$ctrl.addProduct()">
         <input type="text" placeholder="Product Name" ng-model="$ctrl.newProduct.name">
@@ -29,16 +35,5 @@
         <input type="number" placeholder="quantity" ng-model="$ctrl.newProduct.quantity" ng-required="true">
         <button type="submit">Submit Product</button>
     </form>
-</div>
-
-
-<!-- Favorites Implementation
-<div class="section-container favorites-container">
-    <div class="section-header favorite" ng-repeat="favorite in $ctrl.favoritesList">
-        <div>
-            {{ favorite }}
-        </div>
-        <a href="" class="product-fav-btn" ng-click="$ctrl.removeFavorite($index)">&#215;</a>
-    </div>
 </div>
 -->

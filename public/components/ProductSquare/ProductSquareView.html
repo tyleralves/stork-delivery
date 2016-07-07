@@ -1,15 +1,15 @@
-<div class="col-md-4 ps-product-container">
+<div class="col-md-3 ps-product-container">
     <div class="row">
         <div class="col-md-12">
             <div class="ps-data-container">
                 <!-- TODO product image -->
-                <img class="ps-image" src="{{ $ctrl.product.imageSrc }}">
+                <img class="ps-image" src="{{ $ctrl.product.mediumImage }}">
                 <div class="ps-details-container">
                     <a href="" class="product-name-text">{{ $ctrl.product.name }}</a>
-                    <div>By <a href="">{{ $ctrl.product.brand }}</a></div>
+                    <div>By <a href="">{{ $ctrl.product.brandName }}</a></div>
                 </div>
                 <div class="ps-price-container">
-                    <span class="product-price-text">{{ $ctrl.product.price | currency }}</span>
+                    <span class="product-price-text">{{ $ctrl.product.salePrice | currency }}</span>
                 </div>
                 <div class="product-selection ps-selection-container" ng-hide="$ctrl.quantity">
                     <!-- TODO <label for="product-quantity-{{$ctrl.index}}"></label> -->
@@ -33,4 +33,4 @@
         </div>
     </div>
 </div>
-<div ng-if="($ctrl.index+1)%3 === 0" class="clearfix"></div>
+<div ng-if="($ctrl.index+1)%4 === 0" class="clearfix"></div>
