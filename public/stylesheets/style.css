@@ -58,7 +58,14 @@
 }
 
 /* product-* */
+.pagination-nav{
+  display: flex;
+}
 
+.pagination {
+  margin-left: auto;
+  margin-right: auto;
+}
 
 /* product-wide */
 .pw-product-row {

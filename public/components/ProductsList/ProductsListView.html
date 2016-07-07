@@ -3,8 +3,57 @@
 </div>
 <span style="color:red" ng-show="$ctrl.loading">{{$ctrl.loading}}</span>
 <div ng-hide="$ctrl.loading">
-    <a ng-show="$ctrl.prevPage" ng-click="$ctrl.getProducts(-1)">Previous Page</a>
-    <a ng-click="$ctrl.getProducts(1)">Next Page</a>
+    <!-- Bootstrap pagination component -->
+    <nav class="pagination-nav">
+        <ul class="pagination">
+            <li
+                    class="page-item"
+                    ng-class="$ctrl.currentPage === 1 ? 'disabled' : ''"
+                    ng-click="$ctrl.currentPage = $ctrl.currentPage-1; $ctrl.getProducts()">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li
+                    ng-show="$ctrl.currentPage>2"
+                    class="page-item"
+                    ng-click="$ctrl.currentPage = $ctrl.currentPage-2; $ctrl.getProducts()">
+                <a class="page-link" href="#">
+                    {{$ctrl.currentPage-2}}
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li
+                    ng-show="$ctrl.currentPage>1"
+                    class="page-item"
+                    ng-click="$ctrl.currentPage = $ctrl.currentPage-1; $ctrl.getProducts()">
+                <a class="page-link" href="#">{{$ctrl.currentPage-1}}</a>
+            </li>
+            <li
+                    class="page-item active">
+                <a class="page-link" href="#">{{$ctrl.currentPage}}</a>
+            </li>
+            <li
+                    class="page-item"
+                    ng-click="$ctrl.currentPage = $ctrl.currentPage+1; $ctrl.getProducts()">
+                <a class="page-link">{{$ctrl.currentPage+1}}</a>
+            </li>
+            <li class="page-item"
+                ng-click="$ctrl.currentPage = $ctrl.currentPage+2; $ctrl.getProducts()">
+                <a class="page-link">{{$ctrl.currentPage+2}}</a>
+            </li>
+            <li
+                    class="page-item"
+                    ng-class="$ctrl.currentPage === $ctrl.totalPages?'diabled':''"
+                    ng-click="$ctrl.currentPage = $ctrl.currentPage+1; $ctrl.getProducts()">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 <div class="section-container product-container">
@@ -20,8 +69,57 @@
 </div>
 
 <div ng-hide="$ctrl.loading">
-    <a ng-show="$ctrl.prevPage" ng-click="$ctrl.getProducts(-1)">Previous Page</a>
-    <a ng-click="$ctrl.getProducts(1)">Next Page</a>
+    <!-- Bootstrap pagination component -->
+    <nav class="pagination-nav">
+        <ul class="pagination">
+            <li
+                class="page-item"
+                ng-class="$ctrl.currentPage === 1 ? 'disabled' : ''"
+                ng-click="$ctrl.currentPage = $ctrl.currentPage-1; $ctrl.getProducts()">
+                <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li
+                ng-show="$ctrl.currentPage>2"
+                class="page-item"
+                ng-click="$ctrl.currentPage = $ctrl.currentPage-2; $ctrl.getProducts()">
+                <a class="page-link" href="#">
+                {{$ctrl.currentPage-2}}
+                <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li
+                ng-show="$ctrl.currentPage>1"
+                class="page-item"
+                ng-click="$ctrl.currentPage = $ctrl.currentPage-1; $ctrl.getProducts()">
+                <a class="page-link" href="#">{{$ctrl.currentPage-1}}</a>
+            </li>
+            <li
+                class="page-item active">
+                <a class="page-link" href="#">{{$ctrl.currentPage}}</a>
+            </li>
+            <li
+                class="page-item"
+                ng-click="$ctrl.currentPage = $ctrl.currentPage+1; $ctrl.getProducts()">
+                <a class="page-link">{{$ctrl.currentPage+1}}</a>
+            </li>
+            <li class="page-item"
+                ng-click="$ctrl.currentPage = $ctrl.currentPage+2; $ctrl.getProducts()">
+                <a class="page-link">{{$ctrl.currentPage+2}}</a>
+            </li>
+            <li
+                class="page-item"
+                ng-class="$ctrl.currentPage === $ctrl.totalPages?'diabled':''"
+                ng-click="$ctrl.currentPage = $ctrl.currentPage+1; $ctrl.getProducts()">
+                <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 <!--

@@ -20,8 +20,8 @@ Features:
 3. Products
 
 
-TODO:
-8*. Create checkout component
+TODO:Remove inventory checks on ProductFactory.addToCart and CartFactory.changeCartQuantity
+TODO: ENV variables walmart api key, jwt secret
 
 
 Completed:

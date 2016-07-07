@@ -3,7 +3,6 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var passport = require('passport');
 var request = require('request');
-var Q = require('q');
 var expressJwt = require('express-jwt');
 var jwt = require('jsonwebtoken');
 var Product = mongoose.model('Product');
@@ -16,13 +15,16 @@ router.post('/register', function(req,res,next){
     return res.status(400).json({message: 'Please fill out all fields'});
   }
 
-  var user = new User;
+  var user = new User();
   user.username = req.body.username;
   user.setPassword(req.body.password);
 
   user.save(function(err, user){
-    if(err){return next(err);}
-    return res.json({token: user.generateJWT()});
+    if(err){
+      console.log(err);
+      return next(err);}
+   
+    res.json({token: user.generateJWT()});
   });
 });
 
@@ -41,7 +43,6 @@ router.post('/login', function(req,res,next){
   })(req, res, next);
 });
 
-
 router.route('/products')
   .get(function(req, res, next){
     var queryUrl = req.query.page;
@@ -51,7 +52,6 @@ router.route('/products')
       url: productUrl,
       json: true
     }, function (error, response, body) {
-      console.log(body);
       res.json(body);
     });
   });

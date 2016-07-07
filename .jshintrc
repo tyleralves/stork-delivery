@@ -1,0 +1,19 @@
+{
+  "undef": true,
+  "unused": true,
+  "jshint strict":true,
+  "noempty":true,
+  "noarg":true,
+  "eqeqeq":true,
+  "devel":true,
+  "browser":true,
+  "bitwise":true,
+  "debug":true,
+  "curly":true,
+  "nonew":true,
+  "forin":true,
+  "globals": {
+    "angular": false,
+    "require": false
+  }
+}

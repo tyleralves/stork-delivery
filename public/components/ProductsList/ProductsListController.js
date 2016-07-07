@@ -5,6 +5,7 @@ function ProductsListController(ProductFactory, CartFactory, $window) {
   var ctrl = this;
   ctrl.productList = ProductFactory.productList;
   ctrl.newProduct = {};
+  ctrl.currentPage = 1;
 
   //Add product to cart
   ctrl.cartList = [];
@@ -16,14 +17,14 @@ function ProductsListController(ProductFactory, CartFactory, $window) {
   };
 
   //Get products array for view display
-  ctrl.getProducts = function(pageChange){
+  ctrl.getProducts = function(currentPage){
     $window.scrollTo(0,0);
     ctrl.loading = 'Loading...';
-    ProductFactory.getProducts(pageChange || 0)
+    ProductFactory.getProducts(ctrl.currentPage)
       .then(function(){
         ctrl.productList = ProductFactory.productList;
-        ctrl.prevPage = ProductFactory.prevPage;
         ctrl.loading = false;
+        ctrl.totalPages = ProductFactory.totalPages;
       });
   };
   ctrl.getProducts();
