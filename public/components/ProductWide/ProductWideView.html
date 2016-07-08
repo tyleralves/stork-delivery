@@ -1,13 +1,12 @@
 <div class="row pw-product-row">
     <div class="pw-product-col col-md-6">
         <div>
-            <img class="pw-image" src="{{ $ctrl.product.imageSrc }}">
+            <img class="pw-image" src="{{ $ctrl.product.mediumImage }}">
             <div><a href="" class="product-name-text">{{ $ctrl.product.name }}</a></div>
-            <div>By <a href="">{{ $ctrl.product.brand }}</a></div>
         </div>
     </div>
     <div class="pw-product-col col-md-3">
-        <span class="product-price-text">{{ $ctrl.product.price | currency }}</span>
+        <span class="product-price-text">{{ $ctrl.product.salePrice | currency }}</span>
     </div>
     <div class="product-selection pw-product-col" ng-class="{'col-md-3': !$ctrl.quantity}" ng-hide="$ctrl.quantity">
         <!-- TODO <label for="product-quantity-{{$ctrl.index}}"></label> -->

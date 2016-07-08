@@ -1,7 +1,7 @@
 /**
  * Created by Tyler on 5/21/2016.
  */
-function CartFactory($http, $q, $location, UserFactory, ProductFactory){
+function CartFactory($http, $q, UserFactory, ProductFactory){
   var CartFactory = {};
   CartFactory.cartList = [];
   CartFactory.httpResponse = {};
@@ -13,25 +13,24 @@ function CartFactory($http, $q, $location, UserFactory, ProductFactory){
       })
       .then(function successCartGet(cartResponse){
         angular.copy(cartResponse.data, CartFactory.cartList);
-      })
+      });
   };
   
   CartFactory.addCart = function(product, quantity){
     //Client side validation to determine if product is already in user's cart
     //Only perform if CartFactory.cartList has already been populated
-    if(CartFactory.cartList.length && product._id === CartFactory.cartList[0].product._id){
+    if(CartFactory.cartList.length && product.itemId === CartFactory.cartList[0].product.itemId){
       CartFactory.message = "Item is already in your cart.";
-      return $q(function(resolve,reject){
+      return $q(function(resolve){
         resolve();
       });
     //Validates that user selects a positive quantity
     }else if(quantity < 1){
       CartFactory.message = "Please select the desired quantity to add to your cart.";
-      return $q(function(resolve,reject){
+      return $q(function(resolve){
         resolve();
       });
     }
-    
     product.quan = quantity;
     return $http
       .post('/cartAddProduct', product, {
@@ -78,8 +77,9 @@ function CartFactory($http, $q, $location, UserFactory, ProductFactory){
 
   CartFactory.cartTotal = function(){
     var i, length, total = 0;
+    console.log(CartFactory.cartList);
     for(i = 0, length = CartFactory.cartList.length; i<length; i++){
-      total += CartFactory.cartList[i].quantity * CartFactory.cartList[i].product.price;
+      total += CartFactory.cartList[i].quantity * CartFactory.cartList[i].product.salePrice;
     }
     return total;
   };

@@ -5,10 +5,10 @@ var mongoose = require('mongoose');
 
 var ProductSchema = new mongoose.Schema({
   name: {type: String, unique:true},
-  brand: String,
   category: String,
-  price: Number,
+  salePrice: Number,
   description: String,
+  mediumImage: String,
   deal: Boolean,
   quantity: Number
 });

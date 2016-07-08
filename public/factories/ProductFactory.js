@@ -20,9 +20,8 @@ function ProductFactory($http){
         params: {page: apiString}
       })
       .then(function(products){
-        console.log(products);
         //Makes local 'non-reference' copy of Walmart api response object
-        angular.copy(products.data.items, ProductFactory.productList);
+        angular.copy(products.data, ProductFactory.productList);
         var totalResults = products.data.totalResults < 1000 ? products.data.totalResults : 999;
         ProductFactory.totalPages = Math.floor(totalResults/perPage);
         console.log(ProductFactory.totalPages);

@@ -16,6 +16,7 @@ router.post('/register', function(req,res,next){
   }
 
   var user = new User();
+
   user.username = req.body.username;
   user.setPassword(req.body.password);
 
@@ -43,25 +44,55 @@ router.post('/login', function(req,res,next){
   })(req, res, next);
 });
 
-router.route('/products')
+
+//Used to populate product collection from Walmart api
+router.route('/populateproducts')
   .get(function(req, res, next){
-    var queryUrl = req.query.page;
+    //
     //Walmart api url
-    var productUrl = "http://api.walmartlabs.com" + queryUrl;
-    request({
-      url: productUrl,
-      json: true
-    }, function (error, response, body) {
-      res.json(body);
+    var productUrl = "", queryStart = 1;
+    var iArray = [1,2,3,4,5,6,7,8,9,10];
+    iArray.forEach(function(item, index, array){
+      queryStart = 1 + (index)*25;
+      productUrl = "http://api.walmartlabs.com/v1/search?apiKey=ky2dqkc2sx2npuh5p3tbc2sx&query=a&categoryId=3944&numItems=25&start=" + queryStart;
+      console.log(queryStart);
+      (function asyncStuff(productUrl){
+        setTimeout(function(){
+          request({
+            url: productUrl,
+            json: true
+          }, function (error, response, body) {
+            console.log(body);
+
+            body.items.forEach(function (item, index, array) {
+              var product = new Product();
+              product.name = item.name;
+              product.salePrice = item.salePrice;
+              product.description = item.shortDescription;
+              product.mediumImage = item.mediumImage;
+              product.quantity = 9;
+              product.save(function (err, product) {
+
+              });
+            });
+          });},200*index);
+      })(productUrl);
     });
+    res.json({done: 'done!'});
   });
+
+router.get('/products', function(req,res,next){
+  Product.find({}, function(err, products){
+    res.json(products);
+  });
+});
 
 router.get('/cart', auth, function(req, res, next){
   User.findOne({username: req.payload.username}, function(err, user){
     user.populate('cart.product', function(err, user){
       if(err){return next(err);}
       res.json(user.cart);
-    })
+    });
   });
 });
 
