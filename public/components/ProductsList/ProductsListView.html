@@ -8,7 +8,7 @@
         <ul class="pagination">
             <li
                     class="page-item"
-                    ng-class="$ctrl.currentPage === 1 ? 'disabled' : ''"
+                    ng-hide="$ctrl.currentPage === 1"
                     ng-click="$ctrl.currentPage = $ctrl.currentPage-1; $ctrl.getProducts()">
                 <a class="page-link" href="#" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
@@ -31,21 +31,22 @@
                 <a class="page-link" href="#">{{$ctrl.currentPage-1}}</a>
             </li>
             <li
-                    class="page-item active">
+                class="page-item active">
                 <a class="page-link" href="#">{{$ctrl.currentPage}}</a>
             </li>
-            <li
-                    class="page-item"
-                    ng-click="$ctrl.currentPage = $ctrl.currentPage+1; $ctrl.getProducts()">
+            <li class="page-item"
+                ng-hide="$ctrl.currentPage+1>$ctrl.totalPages"
+                ng-click="$ctrl.currentPage = $ctrl.currentPage+1; $ctrl.getProducts()">
                 <a class="page-link">{{$ctrl.currentPage+1}}</a>
             </li>
             <li class="page-item"
+                ng-hide="$ctrl.currentPage+2>$ctrl.totalPages"
                 ng-click="$ctrl.currentPage = $ctrl.currentPage+2; $ctrl.getProducts()">
                 <a class="page-link">{{$ctrl.currentPage+2}}</a>
             </li>
             <li
                     class="page-item"
-                    ng-class="$ctrl.currentPage === $ctrl.totalPages?'diabled':''"
+                    ng-hide="$ctrl.currentPage === $ctrl.totalPages"
                     ng-click="$ctrl.currentPage = $ctrl.currentPage+1; $ctrl.getProducts()">
                 <a class="page-link" href="#" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>

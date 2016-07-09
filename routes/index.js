@@ -45,7 +45,7 @@ router.post('/login', function(req,res,next){
 });
 
 
-//Used to populate product collection from Walmart api
+/*Used to populate product collection from Walmart api
 router.route('/populateproducts')
   .get(function(req, res, next){
     //
@@ -80,10 +80,25 @@ router.route('/populateproducts')
     });
     res.json({done: 'done!'});
   });
+*/
 
 router.get('/products', function(req,res,next){
-  Product.find({}, function(err, products){
-    res.json(products);
+  var totalPages, perPage = 12;
+  //Pagination
+  // May need to implement different pagination strategy if Product collection grows very large
+  Product
+    .find({})
+    .limit(perPage)
+    .skip(perPage*(req.query.currentPage-1))
+    .sort({
+      _id: 1
+    })
+    .exec(function(err, products){
+      //Gets count of matching documents to derive number of pages
+      Product.find({}).count().exec(function(err, count){
+        totalPages = Math.ceil(count/perPage);
+        res.json({pages: totalPages,products:products});
+      });
   });
 });
 
@@ -91,6 +106,7 @@ router.get('/cart', auth, function(req, res, next){
   User.findOne({username: req.payload.username}, function(err, user){
     user.populate('cart.product', function(err, user){
       if(err){return next(err);}
+      console.log(user);
       res.json(user.cart);
     });
   });
@@ -132,7 +148,10 @@ router.post('/cartAddProduct', auth, function(req, res, next){
     User.update({username: req.payload.username, 'cart.product': {$ne: newCartItem.product}},
       {$push: {cart: newCartItem}},
       function(err, user){
-        if(err){return next(err);}
+        if(err){
+          console.log(err);
+          return next(err);
+        }
         if(!user.nModified){
           res.json({message: 'Item is already in your cart.'});
         }else{

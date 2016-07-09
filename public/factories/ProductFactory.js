@@ -9,21 +9,15 @@ function ProductFactory($http){
   var perPage = 12; 
 
   ProductFactory.getProducts = function(currentPage){
-    //Increments or decrements currentPage based on whether user choose 'Next Page' or 'Previous Page'
-    var startItem = perPage * currentPage + 1 - perPage;
-    var apiString = "/v1/search?apiKey=ky2dqkc2sx2npuh5p3tbc2sx&query=ipod&start=" + startItem + "&numItems=" + perPage;
-    console.log(currentPage);
-    console.log(apiString);
     return $http
       .get('/products', {
         //Sends query string to get request to be appended to walmart api url
-        params: {page: apiString}
+        params: {currentPage: currentPage}
       })
       .then(function(products){
         //Makes local 'non-reference' copy of Walmart api response object
-        angular.copy(products.data, ProductFactory.productList);
-        var totalResults = products.data.totalResults < 1000 ? products.data.totalResults : 999;
-        ProductFactory.totalPages = Math.floor(totalResults/perPage);
+        angular.copy(products.data.products, ProductFactory.productList);
+        ProductFactory.totalPages = products.data.pages;
         console.log(ProductFactory.totalPages);
       });
   };

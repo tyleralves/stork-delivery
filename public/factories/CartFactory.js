@@ -17,36 +17,32 @@ function CartFactory($http, $q, UserFactory, ProductFactory){
   };
   
   CartFactory.addCart = function(product, quantity){
-    //Client side validation to determine if product is already in user's cart
-    //Only perform if CartFactory.cartList has already been populated
-    if(CartFactory.cartList.length && product.itemId === CartFactory.cartList[0].product.itemId){
-      CartFactory.message = "Item is already in your cart.";
-      return $q(function(resolve){
-        resolve();
-      });
-    //Validates that user selects a positive quantity
-    }else if(quantity < 1){
+    if(!quantity){
       CartFactory.message = "Please select the desired quantity to add to your cart.";
       return $q(function(resolve){
         resolve();
       });
+    }else{
+      console.log(product._id);
+      product.quan = quantity;
+      return $http
+        .post('/cartAddProduct', product, {
+          headers: {authorization: 'Bearer ' + UserFactory.getToken()}
+        })
+        .then(
+          function successCartPost(response){
+            console.log('successCartPost');
+            CartFactory.message = response.data.message;
+            //The response will include the addedProduct property only if the product didn't already exist in the user's cart
+            if(response.data.hasOwnProperty('addedProduct')){
+              CartFactory.cartList.push(response.data.addedProduct);
+              ProductFactory.getProducts();
+            }
+          }, function errorCartPost(response){
+            CartFactory.message = response.data.message;
+          });
     }
-    product.quan = quantity;
-    return $http
-      .post('/cartAddProduct', product, {
-        headers: {authorization: 'Bearer ' + UserFactory.getToken()}
-      })
-      .then(
-        function successCartPost(response){
-          CartFactory.message = response.data.message;
-          //The response will include the addedProduct property only if the product didn't already exist in the user's cart
-          if(response.data.hasOwnProperty('addedProduct')){
-            CartFactory.cartList.push(response.data.addedProduct);
-            ProductFactory.getProducts();
-          }
-      }, function errorCartPost(response){
-          CartFactory.message = response.data.message;
-      });
+    
   };
 
   CartFactory.removeCart = function(product){

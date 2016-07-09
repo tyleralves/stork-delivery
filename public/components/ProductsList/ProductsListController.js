@@ -17,18 +17,17 @@ function ProductsListController(ProductFactory, CartFactory, $window) {
   };
 
   //Get products array for view display
-  ctrl.getProducts = function(currentPage){
+  ctrl.getProducts = function(){
     $window.scrollTo(0,0);
     ctrl.loading = 'Loading...';
     ProductFactory.getProducts(ctrl.currentPage)
       .then(function(){
         ctrl.productList = ProductFactory.productList;
-        ctrl.loading = false;
         ctrl.totalPages = ProductFactory.totalPages;
+        ctrl.loading = false;
       });
   };
   ctrl.getProducts();
-  
 }
 
 angular
