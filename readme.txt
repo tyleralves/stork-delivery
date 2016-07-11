@@ -11,16 +11,13 @@ Local mongo server (now using MongoLab):
 mongod --dbpath C:\Users\Tyler\WebstormProjects\stork-delivery\data
 
 Features:
-1. Favorites List
-
-2. Cart
+1. Cart
     - Add
     - Remove
     - Specify Quantity
-3. Products
+2. Products
 
 
-TODO:Remove inventory checks on ProductFactory.addToCart and CartFactory.changeCartQuantity
 TODO: ENV variables walmart api key, jwt secret
 
 

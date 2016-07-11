@@ -2,6 +2,7 @@
  * Created by Tyler on 5/21/2016.
  */
 function CartController(CartFactory){
+  'use strict';
   var ctrl = this;
 
   CartFactory.getCart()

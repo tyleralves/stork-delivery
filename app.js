@@ -1,4 +1,5 @@
 var express = require('express');
+var dotenv = require('dotenv').config();
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -13,7 +14,7 @@ require('./models/Users');
 //passportjs configuration
 require('./config/passport');
 
-mongoose.connect('127.0.0.1:27017/stork');
+mongoose.connect('mongodb://admin:C3l2i4mb@ds049935.mlab.com:49935/heroku_cr9sj7df');
 
 
 var routes = require('./routes/index');

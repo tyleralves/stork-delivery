@@ -1,7 +1,7 @@
 {
   "undef": true,
-  "unused": true,
-  "jshint strict":true,
+  "unused": false,
+  "strict":true,
   "noempty":true,
   "noarg":true,
   "eqeqeq":true,
