@@ -8,7 +8,7 @@ var jwt = require('jsonwebtoken');
 var Product = mongoose.model('Product');
 var User = mongoose.model('User');
 
-var auth = expressJwt({secret: 'SECRET', userProperty: 'payload'});
+var auth = expressJwt({secret: process.env.JWT_SECRET, userProperty: 'payload'});
 
 router.post('/register', function(req,res,next){
   if(!req.body.username || !req.body.password){
@@ -23,7 +23,12 @@ router.post('/register', function(req,res,next){
   user.save(function(err, user){
     if(err){
       console.log(err);
-      return next(err);}
+      if(err.code === 11000){
+        return res.status(400).json({message: 'Username already exists'});
+      }else{
+        return next(err);
+      }
+    }
    
     res.json({token: user.generateJWT()});
   });

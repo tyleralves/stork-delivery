@@ -2,6 +2,7 @@
  * Created by Tyler on 5/16/2016.
  */
 function RegisterController(UserFactory, $state) {
+  'use strict';
   var ctrl = this;
   ctrl.user = {};
   

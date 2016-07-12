@@ -7,8 +7,6 @@ StartUp:
 Mongo Executables:
 cd C:\program files\mongodb\server\3.2\bin
 
-C:\Users\Tyler\WebstormProjects\stork-delivery\data\backup
-
 Local mongo server (now using MongoLab):
 mongod --dbpath C:\Users\Tyler\WebstormProjects\stork-delivery\data
 
@@ -18,9 +16,6 @@ Features:
     - Remove
     - Specify Quantity
 2. Products
-
-
-TODO: ENV variables walmart api key, jwt secret
 
 mongorestore -h ds049935.mlab.com:49935 -d heroku_cr9sj7df -u <user> -p <password> <input db directory>
 Completed:
