@@ -14,7 +14,7 @@ require('./models/Users');
 //passportjs configuration
 require('./config/passport');
 
-mongoose.connect('mongodb://admin:C3l2i4mb@ds049935.mlab.com:49935/heroku_cr9sj7df');
+mongoose.connect('mongodb://'+ process.env.MONGOLAB_USERNAME+':'+ process.env.MONGOLAB_PASSWORD +'@ds049935.mlab.com:49935/heroku_cr9sj7df');
 
 
 var routes = require('./routes/index');

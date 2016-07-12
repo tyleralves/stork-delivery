@@ -2,6 +2,7 @@
  * Created by Tyler on 5/16/2016.
  */
 function LoginController(UserFactory, $state){
+  'use strict';
   var ctrl = this;
   ctrl.user = {};
 
@@ -12,7 +13,7 @@ function LoginController(UserFactory, $state){
         if(response.status === 400){
           ctrl.message = response.data.message;
         }else if(response.status === 401){
-          ctrl.message = 'Username or password is incorrect'
+          ctrl.message = 'Username or password is incorrect';
         }else{
           $state.go('home');
         }
