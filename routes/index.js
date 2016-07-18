@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
+var Q = require('q');
 var mongoose = require('mongoose');
+mongoose.Promise = Q.Promise;
 var passport = require('passport');
 var request = require('request');
 var expressJwt = require('express-jwt');
@@ -50,7 +52,7 @@ router.post('/login', function(req,res,next){
 });
 
 
-/*Used to populate product collection from Walmart api
+//Used to populate product collection from Walmart api
 router.route('/populateproducts')
   .get(function(req, res, next){
     //
@@ -59,7 +61,7 @@ router.route('/populateproducts')
     var iArray = [1,2,3,4,5,6,7,8,9,10];
     iArray.forEach(function(item, index, array){
       queryStart = 1 + (index)*25;
-      productUrl = "http://api.walmartlabs.com/v1/search?apiKey=ky2dqkc2sx2npuh5p3tbc2sx&query=a&categoryId=3944&numItems=25&start=" + queryStart;
+      productUrl = "http://api.walmartlabs.com/v1/search?apiKey=ky2dqkc2sx2npuh5p3tbc2sx&query=&categoryId=3944&numItems=25&start=" + queryStart;
       console.log(queryStart);
       (function asyncStuff(productUrl){
         setTimeout(function(){
@@ -67,7 +69,6 @@ router.route('/populateproducts')
             url: productUrl,
             json: true
           }, function (error, response, body) {
-            console.log(body);
 
             body.items.forEach(function (item, index, array) {
               var product = new Product();
@@ -75,9 +76,10 @@ router.route('/populateproducts')
               product.salePrice = item.salePrice;
               product.description = item.shortDescription;
               product.mediumImage = item.mediumImage;
+              product.category = item.categoryPath.slice(0,item.categoryPath.indexOf('/'));
+              product.subCategory = item.categoryPath.slice(item.categoryPath.lastIndexOf('/')+1);
               product.quantity = 9;
               product.save(function (err, product) {
-
               });
             });
           });},200*index);
@@ -85,26 +87,37 @@ router.route('/populateproducts')
     });
     res.json({done: 'done!'});
   });
-*/
+
 
 router.get('/products', function(req,res,next){
-  var totalPages, perPage = 12;
+  var queryOptions = {}, totalPages, perPage = 16;
+  if(req.query.category){
+    queryOptions.category = req.query.category;
+  }
   //Pagination
   // May need to implement different pagination strategy if Product collection grows very large
-  Product
-    .find({})
+  var productQuery = Product.find(queryOptions)
     .limit(perPage)
     .skip(perPage*(req.query.currentPage-1))
     .sort({
       _id: 1
     })
-    .exec(function(err, products){
-      //Gets count of matching documents to derive number of pages
-      Product.find({}).count().exec(function(err, count){
-        totalPages = Math.ceil(count/perPage);
-        res.json({pages: totalPages,products:products});
-      });
-  });
+    .exec();
+
+  //Gets count of matching documents to derive number of pages
+  var countQuery = Product.find(queryOptions).count().exec();
+  //Gets all categories within full search result (for filter options)
+  var categoryQuery = Product.find(queryOptions).distinct('category').exec();
+
+  Q.spread([productQuery,countQuery,categoryQuery],
+    function(products, count, categories) {
+      totalPages = Math.ceil(count / perPage);
+      res.json({pages: totalPages, products: products, categories: categories});
+    })
+    .catch(function(err){
+      console.log(err);
+    });
+
 });
 
 router.get('/cart', auth, function(req, res, next){

@@ -5,18 +5,20 @@ function ProductFactory($http){
   'use strict';
   var ProductFactory = {};
   ProductFactory.productList = [];
+  ProductFactory.categories = [];
   var apiResponse = {};
   var perPage = 12; 
 
-  ProductFactory.getProducts = function(currentPage){
+  ProductFactory.getProducts = function(currentPage, category){
     return $http
       .get('/products', {
-        //Sends query string to get request to be appended to walmart api url
-        params: {currentPage: currentPage}
+        //Sends query string to get request for mongoose query
+        params: {currentPage: currentPage, category: category}
       })
       .then(function(products){
         //Makes local 'non-reference' copy of Walmart api response object
         angular.copy(products.data.products, ProductFactory.productList);
+        angular.copy(products.data.categories, ProductFactory.categories);
         ProductFactory.totalPages = products.data.pages;
         console.log(ProductFactory.totalPages);
       });

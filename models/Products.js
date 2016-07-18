@@ -5,7 +5,8 @@ var mongoose = require('mongoose');
 
 var ProductSchema = new mongoose.Schema({
   name: {type: String, unique:true},
-  category: String,
+  category: {type: String, index: true},
+  subCategory: String,
   salePrice: Number,
   description: String,
   mediumImage: String,

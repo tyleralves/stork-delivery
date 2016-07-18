@@ -8,7 +8,7 @@
         <ul class="pagination">
             <li
                     class="page-item"
-                    ng-hide="$ctrl.currentPage === 1"
+                    ng-class="$ctrl.currentPage === 1 ? 'disabled' : ''"
                     ng-click="$ctrl.currentPage = $ctrl.currentPage-1; $ctrl.getProducts()">
                 <a class="page-link" href="#" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
@@ -31,22 +31,23 @@
                 <a class="page-link" href="#">{{$ctrl.currentPage-1}}</a>
             </li>
             <li
-                class="page-item active">
+                    class="page-item active">
                 <a class="page-link" href="#">{{$ctrl.currentPage}}</a>
             </li>
-            <li class="page-item"
-                ng-hide="$ctrl.currentPage+1>$ctrl.totalPages"
-                ng-click="$ctrl.currentPage = $ctrl.currentPage+1; $ctrl.getProducts()">
+            <li
+                    ng-show="$ctrl.currentPage+1<=$ctrl.totalPages"
+                    class="page-item"
+                    ng-click="$ctrl.currentPage = $ctrl.currentPage+1; $ctrl.getProducts()">
                 <a class="page-link">{{$ctrl.currentPage+1}}</a>
             </li>
-            <li class="page-item"
-                ng-hide="$ctrl.currentPage+2>$ctrl.totalPages"
+            <li     ng-show="$ctrl.currentPage+2 <= $ctrl.totalPages"
+                    class="page-item"
                 ng-click="$ctrl.currentPage = $ctrl.currentPage+2; $ctrl.getProducts()">
                 <a class="page-link">{{$ctrl.currentPage+2}}</a>
             </li>
             <li
                     class="page-item"
-                    ng-hide="$ctrl.currentPage === $ctrl.totalPages"
+                    ng-class="$ctrl.currentPage === $ctrl.totalPages?'disabled':''"
                     ng-click="$ctrl.currentPage = $ctrl.currentPage+1; $ctrl.getProducts()">
                 <a class="page-link" href="#" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
@@ -56,83 +57,82 @@
         </ul>
     </nav>
 </div>
-
-<div class="section-container product-container">
-    <div class="row product-row">
-        <product-square
-                class="section-header product"
-                ng-repeat="product in $ctrl.productList"
-                product="product"
-                index="$index"
-                on-product-selected="$ctrl.addCart(product, quantity);">
-        </product-square>
+<div class="row" ng-hide="$ctrl.loading">
+    <div class="col-md-2">
+        <h4>Filter by category:</h4>
+        <ul>
+            <li ng-click="$ctrl.currentPage = 1; $ctrl.getProducts()">All</li>
+            <li ng-repeat="category in $ctrl.categories" ng-click="$ctrl.currentPage = 1; $ctrl.getProducts(category)">
+                {{category}}
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-10 section-container product-container">
+        <div class="row product-row">
+            <product-square
+                    class="section-header product"
+                    ng-repeat="product in $ctrl.productList"
+                    product="product"
+                    index="$index"
+                    on-product-selected="$ctrl.addCart(product, quantity);">
+            </product-square>
+        </div>
     </div>
 </div>
+
 
 <div ng-hide="$ctrl.loading">
     <!-- Bootstrap pagination component -->
     <nav class="pagination-nav">
         <ul class="pagination">
             <li
-                class="page-item"
-                ng-class="$ctrl.currentPage === 1 ? 'disabled' : ''"
-                ng-click="$ctrl.currentPage = $ctrl.currentPage-1; $ctrl.getProducts()">
+                    class="page-item"
+                    ng-class="$ctrl.currentPage === 1 ? 'disabled' : ''"
+                    ng-click="$ctrl.currentPage = $ctrl.currentPage-1; $ctrl.getProducts()">
                 <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-                <span class="sr-only">Previous</span>
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
                 </a>
             </li>
             <li
-                ng-show="$ctrl.currentPage>2"
-                class="page-item"
-                ng-click="$ctrl.currentPage = $ctrl.currentPage-2; $ctrl.getProducts()">
+                    ng-show="$ctrl.currentPage>2"
+                    class="page-item"
+                    ng-click="$ctrl.currentPage = $ctrl.currentPage-2; $ctrl.getProducts()">
                 <a class="page-link" href="#">
-                {{$ctrl.currentPage-2}}
-                <span class="sr-only">(current)</span>
+                    {{$ctrl.currentPage-2}}
+                    <span class="sr-only">(current)</span>
                 </a>
             </li>
             <li
-                ng-show="$ctrl.currentPage>1"
-                class="page-item"
-                ng-click="$ctrl.currentPage = $ctrl.currentPage-1; $ctrl.getProducts()">
+                    ng-show="$ctrl.currentPage>1"
+                    class="page-item"
+                    ng-click="$ctrl.currentPage = $ctrl.currentPage-1; $ctrl.getProducts()">
                 <a class="page-link" href="#">{{$ctrl.currentPage-1}}</a>
             </li>
             <li
-                class="page-item active">
+                    class="page-item active">
                 <a class="page-link" href="#">{{$ctrl.currentPage}}</a>
             </li>
             <li
-                class="page-item"
-                ng-click="$ctrl.currentPage = $ctrl.currentPage+1; $ctrl.getProducts()">
+                    ng-show="$ctrl.currentPage+1<=$ctrl.totalPages"
+                    class="page-item"
+                    ng-click="$ctrl.currentPage = $ctrl.currentPage+1; $ctrl.getProducts()">
                 <a class="page-link">{{$ctrl.currentPage+1}}</a>
             </li>
-            <li class="page-item"
-                ng-click="$ctrl.currentPage = $ctrl.currentPage+2; $ctrl.getProducts()">
+            <li     ng-show="$ctrl.currentPage+2 <= $ctrl.totalPages"
+                    class="page-item"
+                    ng-click="$ctrl.currentPage = $ctrl.currentPage+2; $ctrl.getProducts()">
                 <a class="page-link">{{$ctrl.currentPage+2}}</a>
             </li>
             <li
-                class="page-item"
-                ng-class="$ctrl.currentPage === $ctrl.totalPages?'diabled':''"
-                ng-click="$ctrl.currentPage = $ctrl.currentPage+1; $ctrl.getProducts()">
+                    class="page-item"
+                    ng-class="$ctrl.currentPage === $ctrl.totalPages?'disabled':''"
+                    ng-click="$ctrl.currentPage = $ctrl.currentPage+1; $ctrl.getProducts()">
                 <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-                <span class="sr-only">Next</span>
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
                 </a>
             </li>
         </ul>
     </nav>
 </div>
-
-<!--
-<div>
-    <form name="add-product-form" ng-submit="$ctrl.addProduct()">
-        <input type="text" placeholder="Product Name" ng-model="$ctrl.newProduct.name">
-        <input type="text" placeholder="Brand" ng-model="$ctrl.newProduct.brand">
-        <input type="text" placeholder="Category" ng-model="$ctrl.newProduct.category">
-        <input type="number" placeholder="Price" ng-model="$ctrl.newProduct.price">
-        <input type="text" placeholder="description" ng-model="$ctrl.newProduct.description">
-        <input type="number" placeholder="quantity" ng-model="$ctrl.newProduct.quantity" ng-required="true">
-        <button type="submit">Submit Product</button>
-    </form>
-</div>
--->

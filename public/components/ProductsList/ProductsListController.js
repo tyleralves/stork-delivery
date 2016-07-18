@@ -4,8 +4,11 @@
 function ProductsListController(ProductFactory, CartFactory, $window) {
   var ctrl = this;
   ctrl.productList = ProductFactory.productList;
+  ctrl.categories = ProductFactory.categories;
   ctrl.newProduct = {};
   ctrl.currentPage = 1;
+
+
 
   //Add product to cart
   ctrl.cartList = [];
@@ -17,10 +20,10 @@ function ProductsListController(ProductFactory, CartFactory, $window) {
   };
 
   //Get products array for view display
-  ctrl.getProducts = function(){
+  ctrl.getProducts = function(category){
     $window.scrollTo(0,0);
     ctrl.loading = 'Loading...';
-    ProductFactory.getProducts(ctrl.currentPage)
+    ProductFactory.getProducts(ctrl.currentPage, category)
       .then(function(){
         ctrl.productList = ProductFactory.productList;
         ctrl.totalPages = ProductFactory.totalPages;
