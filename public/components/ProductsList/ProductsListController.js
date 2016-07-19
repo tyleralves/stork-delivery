@@ -36,6 +36,10 @@ function ProductsListController(ProductFactory, CartFactory, $window) {
       .then(function(){
         ctrl.productList = ProductFactory.productList;
         ctrl.totalPages = ProductFactory.totalPages;
+        // True if the user filters through a subcategory selection
+        if(ProductFactory.categories.length===1){
+          ctrl.category = ProductFactory.categories[0];
+        }
         ctrl.loading = false;
       });
   };
