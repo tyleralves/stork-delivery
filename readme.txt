@@ -7,8 +7,9 @@ StartUp:
 Mongo Executables:
 cd C:\program files\mongodb\server\3.2\bin
 
-Local mongo server (now using MongoLab):
-mongod --dbpath C:\Users\Tyler\WebstormProjects\stork-delivery\data
+Mongo Shell (using MongoLab):
+mongo ds049935.mlab.com:49935/heroku_cr9sj7df -u <dbuser> -p <dbpassword>
+
 
 Features:
 1. Cart

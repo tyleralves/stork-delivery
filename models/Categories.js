@@ -3,9 +3,15 @@
  */
 var mongoose = require('mongoose');
 
-var CategorySchema = new mongoose.schema({
-  category: String,
-  subCategories: [String]
+var CategorySchema = new mongoose.Schema({
+  id: String,
+  name: String,
+  path: String,
+  children: [{
+    id: String,
+    name: String,
+    path: String
+  }]
 });
 
 mongoose.model('Category', CategorySchema);

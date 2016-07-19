@@ -1,4 +1,4 @@
-<div class="col-md-3 ps-product-container">
+<div class="col-xs-6 col-md-3 ps-product-container">
     <div class="row">
         <div class="col-md-12">
             <div class="ps-data-container">
@@ -11,15 +11,16 @@
                     <span class="product-price-text">{{ $ctrl.product.salePrice | currency }}</span>
                 </div>
                 <div class="product-selection ps-selection-container" ng-hide="$ctrl.quantity">
-                    <!-- TODO <label for="product-quantity-{{$ctrl.index}}"></label> -->
-                    <select ng-model="quantity"
+                    <label for="product-quantity-{{$ctrl.index}}">Quantity: </label>
+                    <select id="product-quantity-{{$ctrl.index}}"
+                            ng-model="quantity"
                             ng-options="n for n in [] | range:1:$ctrl.product.quantity<90?$ctrl.product.quantity:90">
                     </select>
                     <a class="product-cart-btn" ng-click="$ctrl.onProductSelected({product: $ctrl.product, quantity: quantity}); quantity = 0">+</a>
                 </div>
                 <div class="product-selection ps-selection-container" ng-show="$ctrl.quantity">
-                    <!-- TODO <label for="product-quantity-{{$ctrl.index}}"></label> -->
-                    <input id="product-quantity-{{$ctrl.index}}"
+                    <!-- TODO <label for="product-quantity-input-{{$ctrl.index}}"></label> -->
+                    <input id="product-quantity-input-{{$ctrl.index}}"
                            type="number"
                            min="1"
                            ng-model="$ctrl.quantity"

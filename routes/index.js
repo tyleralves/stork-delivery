@@ -9,6 +9,7 @@ var expressJwt = require('express-jwt');
 var jwt = require('jsonwebtoken');
 var Product = mongoose.model('Product');
 var User = mongoose.model('User');
+var Category = mongoose.model('Category');
 
 var auth = expressJwt({secret: process.env.JWT_SECRET, userProperty: 'payload'});
 
@@ -51,17 +52,39 @@ router.post('/login', function(req,res,next){
   })(req, res, next);
 });
 
+/*Used to populate categories collection from Walmart taxonomy api
+router.route('/populatecategories')
+  .get(function(req, res, next){
+    //Walmart api url
+    var wmUrl = "http://api.walmartlabs.com/v1/taxonomy?apiKey=ky2dqkc2sx2npuh5p3tbc2sx";
 
-//Used to populate product collection from Walmart api
+    request({
+      url:wmUrl,
+      json: true
+    }, function(error, response, body){
+      console.log(body);
+      body.categories.forEach(function(item){
+        var category = new Category();
+        for(var prop in item){
+          if(item.hasOwnProperty(prop)){
+            category[prop]= item[prop];
+          }
+        }
+        category.save(function(err,category){});
+      });
+      res.json(body);
+    });
+  });
+ */
+/*Used to populate product collection from Walmart api
 router.route('/populateproducts')
   .get(function(req, res, next){
-    //
     //Walmart api url
     var productUrl = "", queryStart = 1;
     var iArray = [1,2,3,4,5,6,7,8,9,10];
     iArray.forEach(function(item, index, array){
       queryStart = 1 + (index)*25;
-      productUrl = "http://api.walmartlabs.com/v1/search?apiKey=ky2dqkc2sx2npuh5p3tbc2sx&query=&categoryId=3944&numItems=25&start=" + queryStart;
+      productUrl = "http://api.walmartlabs.com/v1/search?apiKey=ky2dqkc2sx2npuh5p3tbc2sx&query=dvd&categoryId=3944&numItems=25&start=" + queryStart;
       console.log(queryStart);
       (function asyncStuff(productUrl){
         setTimeout(function(){
@@ -76,7 +99,9 @@ router.route('/populateproducts')
               product.salePrice = item.salePrice;
               product.description = item.shortDescription;
               product.mediumImage = item.mediumImage;
+              product.categoryNode = item.categoryNode;
               product.category = item.categoryPath.slice(0,item.categoryPath.indexOf('/'));
+              product.midCategory = item.categoryPath.slice(item.categoryPath.indexOf('/')+1,item.categoryPath.lastIndexOf('/'));
               product.subCategory = item.categoryPath.slice(item.categoryPath.lastIndexOf('/')+1);
               product.quantity = 9;
               product.save(function (err, product) {
@@ -87,32 +112,34 @@ router.route('/populateproducts')
     });
     res.json({done: 'done!'});
   });
-
+*/
 
 router.get('/products', function(req,res,next){
-  var queryOptions = {}, totalPages, perPage = 16;
-  if(req.query.category){
-    queryOptions.category = req.query.category;
-  }
-  //Pagination
+  var totalPages,
+    perPage = 16;
+
+  var queryOptions = req.query.hasOwnProperty('queryOptions')?JSON.parse(req.query.queryOptions):{};
+
+  // Retrieves products and paginates
   // May need to implement different pagination strategy if Product collection grows very large
   var productQuery = Product.find(queryOptions)
     .limit(perPage)
     .skip(perPage*(req.query.currentPage-1))
     .sort({
       _id: 1
-    })
-    .exec();
-
+    }).exec();
   //Gets count of matching documents to derive number of pages
   var countQuery = Product.find(queryOptions).count().exec();
   //Gets all categories within full search result (for filter options)
   var categoryQuery = Product.find(queryOptions).distinct('category').exec();
+  //Gets all subcategories within full search result categories
+  var subCatQuery = Product.find(queryOptions).distinct('subCategory').exec();
 
-  Q.spread([productQuery,countQuery,categoryQuery],
-    function(products, count, categories) {
+  //Performs all database operations in parallel and sends json response
+  Q.spread([productQuery,countQuery,categoryQuery,subCatQuery],
+    function(products, count, categories, subcategories) {
       totalPages = Math.ceil(count / perPage);
-      res.json({pages: totalPages, products: products, categories: categories});
+      res.json({pages: totalPages, products: products, categories: categories, subcategories: subcategories});
     })
     .catch(function(err){
       console.log(err);
@@ -121,12 +148,15 @@ router.get('/products', function(req,res,next){
 });
 
 router.get('/cart', auth, function(req, res, next){
-  User.findOne({username: req.payload.username}, function(err, user){
+  var userQuery = User.findOne({username: req.payload.username}).exec();
+  userQuery.then(function(user){
     user.populate('cart.product', function(err, user){
       if(err){return next(err);}
-      console.log(user);
       res.json(user.cart);
     });
+  })
+  .catch(function(err){
+    console.log(err);
   });
 });
 
@@ -140,76 +170,81 @@ router.post('/cartRemoveProduct', auth, function(req, res, next) {
       }
     }
   }
-  
-  User.findOne({username: req.payload.username}, function (err, user) {
-    var removeIndex = findCartIndex(user);
-    Product.update({_id: req.body.product._id}, {$inc: {quantity: user.cart[removeIndex].quantity}},
-      function (err, product) {
-        if (err) {next(err);}
-        user.cart.splice(removeIndex, 1);
-        user.save(function (err, user) {
-          res.json({message: 'Item removed from cart', removeIndex: removeIndex});
-        });
-      }
-    );
-    
+  var removeIndex;
+  var userQuery = User.findOne({username: req.payload.username}).exec();
+
+  var productQuery = userQuery.then(function (user) {
+    removeIndex = findCartIndex(user);
+    return Product.update({_id: req.body.product._id}, {$inc: {quantity: user.cart[removeIndex].quantity}}).exec();
   });
+
+  Q.spread([userQuery, productQuery], function (user, product) {
+      user.cart.splice(removeIndex, 1);
+      user.save(function () {
+        res.json({message: 'Item removed from cart', removeIndex: removeIndex});
+      });
+    })
+    .catch(function(err){
+      console.log(err);
+    });
 });
   
-router.post('/cartAddProduct', auth, function(req, res, next){
+router.post('/cartAddProduct', auth, function(req, res){
   var newCartItem = {
     product: req.body._id,
     quantity: req.body.quan
   };
 
-  function addCartItem(product){
-    User.update({username: req.payload.username, 'cart.product': {$ne: newCartItem.product}},
-      {$push: {cart: newCartItem}},
-      function(err, user){
-        if(err){
-          console.log(err);
-          return next(err);
-        }
-        if(!user.nModified){
-          res.json({message: 'Item is already in your cart.'});
-        }else{
-          product.quantity -= newCartItem.quantity;
-          product.save();
-          res.json({message: 'Item added to cart', addedProduct: newCartItem});
-        }
-      }
-    );
-  }
+  var userQuery = User.update({username: req.payload.username, 'cart.product': {$ne: newCartItem.product}},
+    {$push: {cart: newCartItem}}).exec();
   
-  Product.findById({_id:req.body._id, quantity: {$gte: newCartItem.quantity}},
-    function(err, product){
-      if(err) {
-        return next(err);
-      }else if(product.nModified === 0) {
+  var productQuery = Product.findById({_id:req.body._id, quantity: {$gte: newCartItem.quantity}}).exec();
+
+  var productPromise = productQuery
+    .then(function(product){
+      if(product.nModified === 0) {
         res.json({message: 'Product no longer has sufficient quantity in stock.'});
       }else{
-        addCartItem(product);
-      }
-  });
-});
-
-router.post('/cartModifyQuantity', auth, function(req, res, next){        
-  var previousQuantity;
-  Product.findOne({_id: req.body.product._id}, function(err, product){
-    User.findOne({username: req.payload.username}, function(err, user){
-      previousQuantity = user.cart[req.body.index].quantity;
-      if(product.quantity >= req.body.quantity-previousQuantity){
-        product.quantity += previousQuantity-req.body.quantity;
-        product.save(function(err, product){
-          user.cart[req.body.index].quantity = req.body.quantity;
-          user.save(function(err, user){
-            res.json({message: 'Cart quantity changed', product: product});
-          });
-        });
-      }else{
-         res.json({message: 'Insufficient inventory, reduce quantity in cart'});
+        return product;
       }
     });
+
+
+  Q.spread([productPromise, userQuery],function(product, user){
+    if(!user.nModified){
+      res.json({message: 'Item is already in your cart.'});
+    }else{
+      product.quantity -= newCartItem.quantity;
+      product.save();
+      res.json({message: 'Item added to cart', addedProduct: newCartItem});
+    }
+  })
+    .catch(function(err){
+      console.log(err);
+    });
+});
+
+router.post('/cartModifyQuantity', auth, function(req, res){
+  var previousQuantity;
+  var productQuery = Product.findOne({_id: req.body.product._id}).exec();
+  var userQuery = User.findOne({username: req.payload.username}).exec();
+
+  Q.spread([productQuery, userQuery], function(product, user){
+    previousQuantity = user.cart[req.body.index].quantity;
+    if(product.quantity >= req.body.quantity-previousQuantity){
+      product.quantity += previousQuantity-req.body.quantity;
+      product.save(function(err, product){
+        user.cart[req.body.index].quantity = req.body.quantity;
+        user.save(function(){
+          res.json({message: 'Cart quantity changed', product: product});
+        });
+      });
+    }else{
+       res.json({message: 'Insufficient inventory, reduce quantity in cart'});
+    }
+  })
+  .catch(function(err){
+    console.log(err);
   });
 });
 

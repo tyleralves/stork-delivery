@@ -1,7 +1,7 @@
 {
   "undef": true,
   "unused": false,
-  "strict":true,
+  "strict": false,
   "noempty":true,
   "noarg":true,
   "eqeqeq":true,
@@ -14,6 +14,7 @@
   "forin":true,
   "globals": {
     "angular": false,
-    "require": false
+    "require": false,
+    "module": false
   }
 }

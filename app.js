@@ -11,6 +11,7 @@ var passport = require('passport');
 
 require('./models/Products');
 require('./models/Users');
+require('./models/Categories');
 //passportjs configuration
 require('./config/passport');
 
@@ -44,9 +45,6 @@ app.use('/', routes);
 app.all('/*', function(req, res, next){
   res.render('index.ejs');
 });
-
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
