@@ -139,7 +139,7 @@ router.get('/products', function(req,res,next){
   Q.spread([productQuery,countQuery,categoryQuery,subCatQuery],
     function(products, count, categories, subcategories) {
       totalPages = Math.ceil(count / perPage);
-      res.json({pages: totalPages, products: products, categories: categories, subcategories: subcategories});
+      res.json({pages: totalPages, totalResults: count, products: products, categories: categories, subcategories: subcategories});
     })
     .catch(function(err){
       console.log(err);

@@ -22,6 +22,7 @@ function ProductFactory($http){
         angular.copy(products.data.categories, ProductFactory.categories);
         angular.copy(products.data.subcategories, ProductFactory.subcategories);
         ProductFactory.totalPages = products.data.pages;
+        ProductFactory.totalResults = products.data.totalResults;
       });
   };
 

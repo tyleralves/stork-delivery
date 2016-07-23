@@ -72,6 +72,22 @@ label {
   width: 100vw;
 }
 
+#pl-topbar-results {
+  background: #FFFFFF;
+  display: flex;
+  margin-bottom: 10px;
+}
+
+#pl-topbar-results>div {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.pl-topbar-link {
+  cursor: pointer;
+  font-weight: 600;
+}
+
 .pl-topbar-heading {
   display: inline;
   font-weight: 600;
@@ -85,6 +101,10 @@ label {
   cursor: pointer;
   display: inline-block;
   margin: 10px;
+}
+
+.pl-refine-col {
+  border: 1px solid lightgray;
 }
 
 .pl-refine-heading {
@@ -113,6 +133,10 @@ label {
 .pagination {
   margin-left: auto;
   margin-right: auto;
+}
+
+.page-item {
+  cursor: pointer;
 }
 
 /* product-wide */

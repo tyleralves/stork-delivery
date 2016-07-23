@@ -9,6 +9,7 @@ function ProductsListController(ProductFactory, CartFactory, $window) {
   ctrl.newProduct = {};
   ctrl.currentPage = 1;
 
+
   //Add product to cart
   ctrl.cartList = [];
   ctrl.addCart = function(product, quantity) {
@@ -35,7 +36,13 @@ function ProductsListController(ProductFactory, CartFactory, $window) {
     ProductFactory.getProducts(ctrl.currentPage, {category:ctrl.category, subCategory:ctrl.subCategory})
       .then(function(){
         ctrl.productList = ProductFactory.productList;
+        ctrl.totalResults = ProductFactory.totalResults;
         ctrl.totalPages = ProductFactory.totalPages;
+
+        //Calculates result statistics for display on results topbar
+        ctrl.currentStartResult = (ctrl.currentPage-1)*16+1;
+        ctrl.currentEndResult = ctrl.currentPage===ctrl.totalPages ? (ctrl.currentPage-1)*16 + ctrl.totalResults%16 : ctrl.currentPage*16;
+
         // True if the user filters through a subcategory selection
         if(ProductFactory.categories.length===1){
           ctrl.category = ProductFactory.categories[0];
