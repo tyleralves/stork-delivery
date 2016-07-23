@@ -19,6 +19,7 @@ function ProductFactory($http){
       .then(function(products){
         //Makes local 'non-reference' copy of Walmart api response object
         angular.copy(products.data.products, ProductFactory.productList);
+
         angular.copy(products.data.categories, ProductFactory.categories);
         angular.copy(products.data.subcategories, ProductFactory.subcategories);
         ProductFactory.totalPages = products.data.pages;

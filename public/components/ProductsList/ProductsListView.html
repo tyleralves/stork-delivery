@@ -2,7 +2,7 @@
     <h5 class="pl-topbar-heading">Category: </h5>
     <ul class="pl-topbar-ul">
         <li ng-click="$ctrl.currentPage = 1; $ctrl.getProducts({category:'all', subCategory:'all'})">All</li>
-        <li ng-repeat="category in $ctrl.categories" ng-click="$ctrl.currentPage = 1; $ctrl.getProducts({category:category,subCategory:'all'})">
+        <li ng-repeat="category in $ctrl.categories | limitTo:10" ng-click="$ctrl.currentPage = 1; $ctrl.getProducts({category:category,subCategory:'all'})">
             {{category}}
         </li>
     </ul>
@@ -18,7 +18,7 @@
         </span>
         <span ng-show="$ctrl.subCategory">/</span>
         <span class="pl-topbar-link"
-            ng-repeat="category in $ctrl.categories" ng-click="$ctrl.currentPage = 1; $ctrl.getProducts({category:$ctrl.category,subCategory:$ctrl.subCategory})"
+            ng-click="$ctrl.currentPage = 1; $ctrl.getProducts({category:$ctrl.category,subCategory:$ctrl.subCategory})"
             ng-show="$ctrl.subCategory">
             {{$ctrl.subCategory}}
         </span>
@@ -38,12 +38,24 @@
             <h4 class="pl-refine-heading">Refine by</h4>
 
             <h5 class="pl-refine-group-heading">Sub Category</h5>
-            <ul class="pl-refine-ul">
+            <ul class="pl-refine-ul" ng-init="subCategoryLimit=10">
                 <li ng-click="$ctrl.currentPage = 1; $ctrl.getProducts({subCategory:'all'})">All</li>
-                <li ng-repeat="subCategory in $ctrl.subcategories" ng-click="$ctrl.currentPage = 1; $ctrl.getProducts({subCategory:subCategory})">
+                <li ng-repeat="subCategory in $ctrl.subcategories | limitTo:subCategoryLimit" ng-click="$ctrl.currentPage = 1; $ctrl.getProducts({subCategory:subCategory})">
                     {{subCategory}}
                 </li>
+                <li
+                        ng-show="$ctrl.subcategories.length>10 && subCategoryLimit===10"
+                        ng-click="subCategoryLimit=$ctrl.subcategories.length">
+                    + See More...
+                </li>
+                <li
+                        ng-show="subCategoryLimit===$ctrl.subcategories.length"
+                        ng-click="subCategoryLimit=10">
+                    + See Less...
+                </li>
             </ul>
+
+
         </div>
         <!-- Products -->
         <div class="col-md-10 section-container product-container">
