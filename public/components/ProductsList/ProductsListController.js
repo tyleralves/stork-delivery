@@ -16,11 +16,13 @@ function ProductsListController(ProductFactory, CartFactory, $window) {
     CartFactory.addCart(product, quantity)
       .then(function(){
         ctrl.message = CartFactory.message;
+        ctrl.getProducts();
       });
   };
 
   //Get products array for view display
   ctrl.getProducts = function(queryOptions){
+    ctrl.message = '';
     $window.scrollTo(0,0);
     ctrl.loading = 'Loading...';
     for(var prop in queryOptions){

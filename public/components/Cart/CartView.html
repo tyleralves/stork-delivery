@@ -1,39 +1,30 @@
-<div class="section-container cart-container">
+<div class="container-fluid">
     <h2>Shopping Cart:</h2>
     <div class="message-container">
         <div class="error">{{ $ctrl.message }}</div>
         <div class="error" ng-show="!$ctrl.cartList.length">Your cart is currently empty.</div>
     </div>
 
-    <div class="row" ng-show="$ctrl.cartList.length">
-        <div class="col-md-6">
-            <span>Item</span>
+    <div class="row cart-title-row" ng-show="$ctrl.cartList.length">
+        <div class="col-md-3 col-md-offset-6">
+            <strong>Price</strong>
         </div>
-        <div class="col-md-3">
-            <span>Price</span>
-        </div>
-        <div class="col-md-3">
-            <span>Quantity</span>
+        <div class="col-md-3 pull-right">
+            <strong>Quantity</strong>
         </div>
     </div>
     <product-wide
-        class="product"
-        ng-repeat="product in $ctrl.cartList"
-        product='product.product'
-        quantity="product.quantity"
-        index = '$index'
-        on-product-removed="$ctrl.removeCart(product, $index);"
-        on-quantity-change="$ctrl.changeCartQuantity(product, index, quantity);">
+            class="product"
+            ng-repeat="product in $ctrl.cartList"
+            product='product.product'
+            quantity="product.quantity"
+            index = '$index'
+            on-product-removed="$ctrl.removeCart(product, $index);"
+            on-quantity-change="$ctrl.changeCartQuantity(product, index, quantity);">
     </product-wide>
-    <div class="row" ng-show="$ctrl.cartList.length">
-        <div class="col-md-6">
-
-        </div>
-        <div class="col-md-3">
-            <span class="product-price-text">Total: {{$ctrl.cartTotal | currency}}</span>
-        </div>
-        <div class="col-md-3">
-
+    <div class="row cart-title-row" ng-show="$ctrl.cartList.length">
+        <div class="col-md-3 pull-right">
+            <span class="product-price-text">Subtotal: {{$ctrl.cartTotal | currency}}</span>
         </div>
     </div>
 </div>

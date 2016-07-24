@@ -25,13 +25,16 @@
     </div>
 </div>
 
-<div class="error-container" ng-show="$ctrl.message">
-    <span class="error">{{ $ctrl.message }}</span>
-</div>
-<span style="color:red" ng-show="$ctrl.loading">{{$ctrl.loading}}</span>
-
 <!-- Main View -->
 <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-2">
+            <div class="error-container" ng-show="$ctrl.message">
+                <span class="error">{{ $ctrl.message }}</span>
+            </div>
+            <span class="error" ng-show="$ctrl.loading">{{$ctrl.loading}}</span>
+        </div>
+    </div>
     <div class="row" ng-hide="$ctrl.loading">
         <!-- Refine by -->
         <div class="col-md-2 pl-refine-col">

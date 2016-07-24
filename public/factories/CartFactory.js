@@ -36,7 +36,7 @@ function CartFactory($http, $q, UserFactory, ProductFactory){
             //The response will include the addedProduct property only if the product didn't already exist in the user's cart
             if(response.data.hasOwnProperty('addedProduct')){
               CartFactory.cartList.push(response.data.addedProduct);
-              ProductFactory.getProducts();
+              //ProductFactory.getProducts();
             }
           }, function errorCartPost(response){
             CartFactory.message = response.data.message;

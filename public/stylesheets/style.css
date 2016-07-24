@@ -139,6 +139,12 @@ label {
   cursor: pointer;
 }
 
+/* Cart */
+.cart-title-row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 /* product-wide */
 .pw-product-row {
   height: 150px;
@@ -186,10 +192,12 @@ product-wide:first-of-type>.pw-product-row {
   border-bottom: 1px solid lightblue;
 }
 
-product-wide >.product-row {
+product-wide >.pw-product-row {
   border-top: none;
   border-bottom: 1px solid lightblue;
   padding: 10px auto;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .ps-image {
