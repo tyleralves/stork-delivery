@@ -1,13 +1,14 @@
 /**
  * Created by Tyler on 5/11/2016.
  */
-function ProductsListController(ProductFactory, CartFactory, $window) {
+function ProductsListController(ProductFactory, CartFactory, $window, $location) {
   var ctrl = this;
   ctrl.productList = ProductFactory.productList;
   ctrl.categories = ProductFactory.categories;
   ctrl.subcategories = ProductFactory.subcategories;
   ctrl.newProduct = {};
-  ctrl.currentPage = 1;
+  ctrl.currentPage = parseInt($location.search().currentPage) || 1;
+  ctrl.queryOptions = $location.search().queryOptions || {};
 
 
   //Add product to cart
@@ -25,17 +26,18 @@ function ProductsListController(ProductFactory, CartFactory, $window) {
     ctrl.message = '';
     $window.scrollTo(0,0);
     ctrl.loading = 'Loading...';
+    //Adds queryOptions specified in view to ctrl properties for persistence between search/ filter actions
     for(var prop in queryOptions){
       if(queryOptions.hasOwnProperty(prop)){
         //Template sends 'all' when user chooses all from the category or subcategory filters
         if(queryOptions[prop]==='all'){
-          delete ctrl[prop];
+          delete ctrl.queryOptions[prop];
         }else{
-          ctrl[prop] = queryOptions[prop];
+          ctrl.queryOptions[prop] = queryOptions[prop];
         }
       }
     }
-    ProductFactory.getProducts(ctrl.currentPage, {category:ctrl.category, subCategory:ctrl.subCategory})
+    ProductFactory.getProducts(ctrl.currentPage, ctrl.queryOptions)
       .then(function(){
         ctrl.productList = ProductFactory.productList;
         ctrl.totalResults = ProductFactory.totalResults;
@@ -54,6 +56,8 @@ function ProductsListController(ProductFactory, CartFactory, $window) {
   };
   ctrl.getProducts();
 }
+
+ProductsListController.$inject = ['ProductFactory', 'CartFactory', '$window', '$location'];
 
 angular
   .module('app')

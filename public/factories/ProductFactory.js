@@ -1,7 +1,7 @@
 /**
  * Created by Tyler on 5/16/2016.
  */
-function ProductFactory($http){
+function ProductFactory($http, $location){
   'use strict';
   var ProductFactory = {};
   ProductFactory.productList = [];
@@ -11,6 +11,8 @@ function ProductFactory($http){
   var perPage = 12; 
 
   ProductFactory.getProducts = function(currentPage, queryOptions){
+    $location.search('currentPage', currentPage);
+    $location.search('queryOptions', JSON.stringify(queryOptions));
     return $http
       .get('/products', {
         //Sends query string to get request for mongoose query
@@ -30,6 +32,7 @@ function ProductFactory($http){
   return ProductFactory;
 }
 
+ProductFactory.$inject = ['$http', '$location'];
 
 angular
   .module('app')
