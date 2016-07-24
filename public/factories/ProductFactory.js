@@ -11,6 +11,7 @@ function ProductFactory($http, $location){
   var perPage = 12; 
 
   ProductFactory.getProducts = function(currentPage, queryOptions){
+    //Adds currentPage and queryOptions to url to allow user to revisit searched/ filtered products
     $location.search('currentPage', currentPage);
     $location.search('queryOptions', JSON.stringify(queryOptions));
     return $http

@@ -7,8 +7,10 @@ function ProductsListController(ProductFactory, CartFactory, $window, $location)
   ctrl.categories = ProductFactory.categories;
   ctrl.subcategories = ProductFactory.subcategories;
   ctrl.newProduct = {};
+  //Gets currentPage from url, if present
   ctrl.currentPage = parseInt($location.search().currentPage) || 1;
-  ctrl.queryOptions = $location.search().queryOptions || {};
+  //Gets queryOptions from url, if present
+  ctrl.queryOptions = $location.search().hasOwnProperty('queryOptions') ? JSON.parse($location.search().queryOptions) : {};
 
 
   //Add product to cart
