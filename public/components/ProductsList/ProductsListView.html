@@ -27,14 +27,6 @@
 
 <!-- Main View -->
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-2">
-            <div class="error-container" ng-show="$ctrl.message">
-                <span class="error">{{ $ctrl.message }}</span>
-            </div>
-            <span class="error" ng-show="$ctrl.loading">{{$ctrl.loading}}</span>
-        </div>
-    </div>
     <div class="row" ng-hide="$ctrl.loading">
         <!-- Refine by -->
         <div class="col-md-2 pl-refine-col">
@@ -62,6 +54,9 @@
         </div>
         <!-- Products -->
         <div class="col-md-10 section-container product-container">
+            <span class="error" ng-show="$ctrl.message">{{ $ctrl.message }}</span>
+            <span class="error" ng-show="$ctrl.error">{{ $ctrl.error }}</span>
+            <span class="error" ng-show="$ctrl.loading">{{$ctrl.loading}}</span>
             <div class="row product-row">
                 <product-square
                         class="section-header product"

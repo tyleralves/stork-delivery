@@ -3,7 +3,11 @@
  */
 function LoginController(UserFactory, $state){
   var ctrl = this;
-  ctrl.user = {};
+  ctrl.user = {
+    username: 'DemoUser',
+    password: 'DemoPass'
+  };
+
 
   ctrl.logIn = function(){
     UserFactory.logIn(ctrl.user)

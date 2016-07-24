@@ -17,13 +17,14 @@ function CartFactory($http, $q, UserFactory, ProductFactory){
   };
   
   CartFactory.addCart = function(product, quantity){
+    //Clears stale message
+    CartFactory.message = '';
     if(!quantity){
-      CartFactory.message = "Please select the desired quantity to add to your cart.";
+      CartFactory.error = "Please select the desired quantity to add to your cart.";
       return $q(function(resolve){
         resolve();
       });
     }else{
-      console.log(product._id);
       product.quan = quantity;
       return $http
         .post('/cartAddProduct', product, {
@@ -31,12 +32,12 @@ function CartFactory($http, $q, UserFactory, ProductFactory){
         })
         .then(
           function successCartPost(response){
-            console.log('successCartPost');
+            CartFactory.error = response.data.error;
             CartFactory.message = response.data.message;
             //The response will include the addedProduct property only if the product didn't already exist in the user's cart
             if(response.data.hasOwnProperty('addedProduct')){
               CartFactory.cartList.push(response.data.addedProduct);
-              //ProductFactory.getProducts();
+              CartFactory.error = false;
             }
           }, function errorCartPost(response){
             CartFactory.message = response.data.message;

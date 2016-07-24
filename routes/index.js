@@ -119,7 +119,6 @@ router.get('/products', function(req,res,next){
     perPage = 16;
 
   var queryOptions = req.query.hasOwnProperty('queryOptions')?JSON.parse(req.query.queryOptions):{};
-  console.log(req.query);
   // Retrieves products and paginates
   // May need to implement different pagination strategy if Product collection grows very large
   var productQuery = Product.find(queryOptions)
@@ -164,7 +163,6 @@ router.post('/cartRemoveProduct', auth, function(req, res, next) {
   function findCartIndex(user){
     var i, length;
     for(i = 0, length = user.cart.length; i < length; i++) {
-      console.log(i);
       if (user.cart[i].product.equals(req.body.product._id)) {
         return i;
       }
@@ -203,7 +201,7 @@ router.post('/cartAddProduct', auth, function(req, res){
   var productPromise = productQuery
     .then(function(product){
       if(product.nModified === 0) {
-        res.json({message: 'Product no longer has sufficient quantity in stock.'});
+        res.json({error: 'Product no longer has sufficient quantity in stock.'});
       }else{
         return product;
       }
@@ -212,7 +210,7 @@ router.post('/cartAddProduct', auth, function(req, res){
 
   Q.spread([productPromise, userQuery],function(product, user){
     if(!user.nModified){
-      res.json({message: 'Item is already in your cart.'});
+      res.json({error: 'Item is already in your cart.'});
     }else{
       product.quantity -= newCartItem.quantity;
       product.save();
@@ -221,7 +219,8 @@ router.post('/cartAddProduct', auth, function(req, res){
   })
     .catch(function(err){
       console.log(err);
-    });
+    })
+    .done();
 });
 
 router.post('/cartModifyQuantity', auth, function(req, res){

@@ -1,8 +1,9 @@
 <div class="container-fluid">
     <h2>Shopping Cart:</h2>
     <div class="message-container">
+        <div class="error">{{ $ctrl.loading }}</div>
         <div class="error">{{ $ctrl.message }}</div>
-        <div class="error" ng-show="!$ctrl.cartList.length">Your cart is currently empty.</div>
+        <div class="error" ng-show="!$ctrl.loading && !$ctrl.cartList.length">Your cart is currently empty.</div>
     </div>
 
     <div class="row cart-title-row" ng-show="$ctrl.cartList.length">

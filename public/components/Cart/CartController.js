@@ -4,9 +4,11 @@
 function CartController(CartFactory){
   'use strict';
   var ctrl = this;
+  ctrl.loading = "Loading...";
 
   CartFactory.getCart()
     .then(function(){
+      ctrl.loading = null;
       ctrl.cartList = CartFactory.cartList;
       ctrl.cartTotal = CartFactory.cartTotal();
     });

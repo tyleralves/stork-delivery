@@ -19,14 +19,24 @@ function ProductsListController(ProductFactory, CartFactory, $window, $location)
     CartFactory.addCart(product, quantity)
       .then(function(){
         ctrl.message = CartFactory.message;
-        ctrl.getProducts();
+        ctrl.error = CartFactory.error;
+        if(!ctrl.error){
+          ctrl.getProducts(null, true);
+        }
       });
   };
 
   //Get products array for view display
-  ctrl.getProducts = function(queryOptions){
-    ctrl.message = '';
+  ctrl.getProducts = function(queryOptions, persistMessage){
+    //Clear error dialog
+    ctrl.error = '';
+    //If message doesn't need to persist, clear message
+    //Note: persistMessage is true after items are added to cart
+    if(!persistMessage){
+      ctrl.message = '';
+    }
     $window.scrollTo(0,0);
+    //Temporary loading dialog, removed when productlist is populated
     ctrl.loading = 'Loading...';
     //Adds queryOptions specified in view to ctrl properties for persistence between search/ filter actions
     for(var prop in queryOptions){
