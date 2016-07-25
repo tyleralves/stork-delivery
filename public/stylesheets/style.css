@@ -18,6 +18,14 @@ label {
 
 }
 
+.navbar-brand {
+  padding-top: 0;
+}
+
+.navbar-brand>img {
+  height: 50px;
+}
+
 .nav li>a {
   color: black;
   background: none;

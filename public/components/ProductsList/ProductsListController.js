@@ -3,6 +3,7 @@
  */
 function ProductsListController(ProductFactory, CartFactory, $window, $location) {
   var ctrl = this;
+
   ctrl.productList = ProductFactory.productList;
   ctrl.categories = ProductFactory.categories;
   ctrl.subcategories = ProductFactory.subcategories;
@@ -49,6 +50,7 @@ function ProductsListController(ProductFactory, CartFactory, $window, $location)
         }
       }
     }
+
     ProductFactory.getProducts(ctrl.currentPage, ctrl.queryOptions)
       .then(function(){
         ctrl.productList = ProductFactory.productList;

@@ -4,6 +4,9 @@
 angular
   .module('app')
   .component('productsList', {
+    bindings: {
+      deals: '<'
+    },
     controller: 'ProductsListController',
     templateUrl: '/components/ProductsList/ProductsListView.html'
   });

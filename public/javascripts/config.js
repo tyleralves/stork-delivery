@@ -27,7 +27,10 @@ angular
       })
       .state('deals', {
         url: '/deals',
-        template: '<deals></deals>'
+        template: '<products-list></products-list>',
+        controller: function($location){
+          $location.search('queryOptions', JSON.stringify({deal:true}));
+        }
       });
     $urlRouterProvider.otherwise('/');
   });

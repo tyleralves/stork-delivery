@@ -10,17 +10,24 @@
 <div class="pl-topbar" id="pl-topbar-results">
     <div>
         <span>{{$ctrl.currentStartResult}}-{{$ctrl.currentEndResult}} of {{$ctrl.totalResults}} results</span>
-        <span ng-show="$ctrl.category">for</span>
+        <span ng-show="$ctrl.category || $ctrl.queryOptions.deal">for</span>
+        <span class="pl-topbar-link"
+              ng-click="$ctrl.currentPage = 1; $ctrl.getProducts({category:$ctrl.category, subCategory:'all'})"
+              ng-show="$ctrl.queryOptions.deal">
+            Deals
+            <span ng-show="$ctrl.category">/</span>
+        </span>
+
         <span class="pl-topbar-link"
             ng-click="$ctrl.currentPage = 1; $ctrl.getProducts({category:$ctrl.category, subCategory:'all'})"
             ng-show="$ctrl.category">
             {{$ctrl.category}}
         </span>
-        <span ng-show="$ctrl.subCategory">/</span>
+        <span ng-show="$ctrl.queryOptions.subCategory">/</span>
         <span class="pl-topbar-link"
-            ng-click="$ctrl.currentPage = 1; $ctrl.getProducts({category:$ctrl.category,subCategory:$ctrl.subCategory})"
-            ng-show="$ctrl.subCategory">
-            {{$ctrl.subCategory}}
+            ng-click="$ctrl.currentPage = 1; $ctrl.getProducts({category:$ctrl.category,subCategory:$ctrl.queryOptions.subCategory})"
+            ng-show="$ctrl.queryOptions.subCategory">
+            {{$ctrl.queryOptions.subCategory}}
         </span>
     </div>
 </div>
@@ -78,49 +85,49 @@
                     class="page-item"
                     ng-class="$ctrl.currentPage === 1 ? 'disabled' : ''"
                     ng-click="$ctrl.currentPage = $ctrl.currentPage-1; $ctrl.getProducts()">
-                <a class="page-link" href="#" aria-label="Previous">
+                <span class="page-link" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                     <span class="sr-only">Previous</span>
-                </a>
+                </span>
             </li>
             <li
                     ng-show="$ctrl.currentPage>2"
                     class="page-item"
                     ng-click="$ctrl.currentPage = $ctrl.currentPage-2; $ctrl.getProducts()">
-                <a class="page-link" href="#">
+                <span class="page-link">
                     {{$ctrl.currentPage-2}}
                     <span class="sr-only">(current)</span>
-                </a>
+                </span>
             </li>
             <li
                     ng-show="$ctrl.currentPage>1"
                     class="page-item"
                     ng-click="$ctrl.currentPage = $ctrl.currentPage-1; $ctrl.getProducts()">
-                <a class="page-link" href="#">{{$ctrl.currentPage-1}}</a>
+                <span class="page-link">{{$ctrl.currentPage-1}}</span>
             </li>
             <li
                     class="page-item active">
-                <a class="page-link" href="#">{{$ctrl.currentPage}}</a>
+                <span class="page-link">{{$ctrl.currentPage}}</span>
             </li>
             <li
                     ng-show="$ctrl.currentPage+1<=$ctrl.totalPages"
                     class="page-item"
                     ng-click="$ctrl.currentPage = $ctrl.currentPage+1; $ctrl.getProducts()">
-                <a class="page-link">{{$ctrl.currentPage+1}}</a>
+                <span class="page-link">{{$ctrl.currentPage+1}}</span>
             </li>
             <li     ng-show="$ctrl.currentPage+2 <= $ctrl.totalPages"
                     class="page-item"
                     ng-click="$ctrl.currentPage = $ctrl.currentPage+2; $ctrl.getProducts()">
-                <a class="page-link">{{$ctrl.currentPage+2}}</a>
+                <span class="page-link">{{$ctrl.currentPage+2}}</span>
             </li>
             <li
                     class="page-item"
                     ng-class="$ctrl.currentPage === $ctrl.totalPages?'disabled':''"
                     ng-click="$ctrl.currentPage = $ctrl.currentPage+1; $ctrl.getProducts()">
-                <a class="page-link" href="#" aria-label="Next">
+                <span class="page-link" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                     <span class="sr-only">Next</span>
-                </a>
+                </span>
             </li>
         </ul>
     </nav>
