@@ -1,6 +1,11 @@
 /* Globals */
+html {
+  width: 100%;
+}
+
 body {
   font-family: Helvetica, Arial, sans-serif;
+  width: 100%;
 }
 
 label {
@@ -10,12 +15,15 @@ label {
 
 /* Navigation */
 .nav {
-  font-size: 18px;
+  font-size: 14px;
   font-family: 'Nunito', sans-serif;
   line-height: 22px;
   font-weight: 500;
   text-transform: uppercase;
+}
 
+.nav-group {
+  width: 100%;
 }
 
 .navbar-brand {
@@ -23,7 +31,8 @@ label {
 }
 
 .navbar-brand>img {
-  height: 50px;
+  height: 40px;
+  margin-top: 5px;
 }
 
 .nav li>a {
@@ -32,6 +41,29 @@ label {
   height: 50px;
   line-height: 25px;
   margin:0;
+}
+
+.nav-search-col {
+  display: flex;
+  align-content: center;
+  height: 50px;
+}
+
+.nav-search-col>.input-group {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.nav-search-input {
+  width: 100%;
+}
+
+@media screen and (min-width: 992px){
+  .nav {
+    font-size: 18px;
+  }
+  .glyphicon {
+  }
 }
 
 .nav li>a:hover, .nav li>a:active, .nav li>a:visited {
@@ -77,7 +109,7 @@ label {
   height: 40px;
   margin-top: 0;
   padding-left: 15px;
-  width: 100vw;
+  /*width: 100vw;*/
 }
 
 #pl-topbar-results {

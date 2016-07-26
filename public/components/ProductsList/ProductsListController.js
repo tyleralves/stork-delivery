@@ -1,7 +1,7 @@
 /**
  * Created by Tyler on 5/11/2016.
  */
-function ProductsListController(ProductFactory, CartFactory, $window, $location) {
+function ProductsListController(ProductFactory, CartFactory, $window, $location, $scope) {
   var ctrl = this;
 
   ctrl.productList = ProductFactory.productList;
@@ -12,6 +12,7 @@ function ProductsListController(ProductFactory, CartFactory, $window, $location)
   ctrl.currentPage = parseInt($location.search().currentPage) || 1;
   //Gets queryOptions from url, if present
   ctrl.queryOptions = $location.search().hasOwnProperty('queryOptions') ? JSON.parse($location.search().queryOptions) : {};
+
 
 
   //Add product to cart
@@ -26,6 +27,11 @@ function ProductsListController(ProductFactory, CartFactory, $window, $location)
         }
       });
   };
+
+  $scope.$on("queryOptions:updated", function(event,data){
+    console.log(data);
+    ctrl.getProducts(data);
+  });
 
   //Get products array for view display
   ctrl.getProducts = function(queryOptions, persistMessage){
@@ -63,7 +69,7 @@ function ProductsListController(ProductFactory, CartFactory, $window, $location)
 
         // True if the user filters through a subcategory selection
         if(ProductFactory.categories.length===1){
-          ctrl.category = ProductFactory.categories[0];
+          ctrl.queryOptions.category = ProductFactory.categories[0];
         }
         ctrl.loading = false;
       });
@@ -71,7 +77,7 @@ function ProductsListController(ProductFactory, CartFactory, $window, $location)
   ctrl.getProducts();
 }
 
-ProductsListController.$inject = ['ProductFactory', 'CartFactory', '$window', '$location'];
+ProductsListController.$inject = ['ProductFactory', 'CartFactory', '$window', '$location', '$scope'];
 
 angular
   .module('app')

@@ -4,7 +4,7 @@
 var mongoose = require('mongoose');
 
 var ProductSchema = new mongoose.Schema({
-  name: {type: String, unique:true},
+  name: {type: String, unique:true, index: true},
   categoryNode: String,
   category: {type: String, index: true},
   midCategory: String,
@@ -15,5 +15,7 @@ var ProductSchema = new mongoose.Schema({
   deal: Boolean,
   quantity: Number
 });
+
+ProductSchema.index({name:'text'});
 
 mongoose.model('Product', ProductSchema);

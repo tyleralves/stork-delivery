@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>Stork: Mountain Delivery Made Easy</title>
@@ -8,9 +8,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.3/ui-bootstrap-tpls.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
+<body ng-app="app">
+
     <main></main>
+
 
     <script src="/javascripts/angularApp.js"></script>
     <script src="/javascripts/config.js"></script>
@@ -19,6 +22,8 @@
     <script src="/factories/CartFactory.js"></script>
     <script src="/components/Main/Main.js"></script>
     <script src="/components/Main/MainController.js"></script>
+    <script src="/components/ProductSearch/ProductSearch.js"></script>
+    <script src="/components/ProductSearch/ProductSearchController.js"></script>
     <script src="/components/ProductsList/ProductsList.js"></script>
     <script src="/components/ProductsList/ProductsListController.js"></script>
     <script src="/components/ProductSquare/ProductSquare.js"></script>

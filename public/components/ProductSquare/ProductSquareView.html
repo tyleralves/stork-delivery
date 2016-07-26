@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="ps-data-container">
                 <!-- TODO product image -->
-                <img class="ps-image" src="{{ $ctrl.product.mediumImage }}">
+                <img class="ps-image img-responsive" src="{{ $ctrl.product.mediumImage }}">
                 <div class="ps-details-container">
                     <a href="" class="product-name-text">{{ $ctrl.product.name }}</a>
                 </div>
@@ -33,4 +33,5 @@
         </div>
     </div>
 </div>
-<div ng-if="($ctrl.index+1)%4 === 0" class="clearfix"></div>
+<div ng-if="($ctrl.index+1)%2 === 0" class="clearfix visible-xs"></div>
+<div ng-if="($ctrl.index+1)%4 === 0" class="clearfix visible-md"></div>

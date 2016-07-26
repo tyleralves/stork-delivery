@@ -119,6 +119,12 @@ router.get('/products', function(req,res,next){
     perPage = 16;
 
   var queryOptions = req.query.hasOwnProperty('queryOptions')?JSON.parse(req.query.queryOptions):{};
+  if(queryOptions.hasOwnProperty('keyword')){
+    queryOptions.$text = {$search: queryOptions.keyword};
+    delete queryOptions.keyword;
+  }
+
+  console.log(queryOptions);
   // Retrieves products and paginates
   // May need to implement different pagination strategy if Product collection grows very large
   var productQuery = Product.find(queryOptions)

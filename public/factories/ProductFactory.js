@@ -8,7 +8,7 @@ function ProductFactory($http, $location){
   ProductFactory.categories = [];
   ProductFactory.subcategories = [];
   var apiResponse = {};
-  var perPage = 12; 
+  var perPage = 12;
 
   ProductFactory.getProducts = function(currentPage, queryOptions){
     //Adds currentPage and queryOptions to url to allow user to revisit searched/ filtered products
@@ -33,7 +33,7 @@ function ProductFactory($http, $location){
   return ProductFactory;
 }
 
-ProductFactory.$inject = ['$http', '$location'];
+ProductFactory.$inject = ['$http', '$location', '$rootScope'];
 
 angular
   .module('app')
