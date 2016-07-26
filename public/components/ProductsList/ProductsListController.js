@@ -29,7 +29,6 @@ function ProductsListController(ProductFactory, CartFactory, $window, $location,
   };
 
   $scope.$on("queryOptions:updated", function(event,data){
-    console.log(data);
     ctrl.getProducts(data);
   });
 

@@ -19,13 +19,13 @@
         </span>
 
         <span class="pl-topbar-link"
-            ng-click="$ctrl.currentPage = 1; $ctrl.getProducts({category:$ctrl.queryOptions.category, subCategory:'all'})"
+            ng-click="$ctrl.currentPage = 1; $ctrl.getProducts({category:$ctrl.queryOptions.category, subCategory:'all', keyword: 'all'})"
             ng-show="$ctrl.queryOptions.category">
             {{$ctrl.queryOptions.category}}
         </span>
         <span ng-show="$ctrl.queryOptions.subCategory">/</span>
         <span class="pl-topbar-link"
-            ng-click="$ctrl.currentPage = 1; $ctrl.getProducts({category:$ctrl.category,subCategory:$ctrl.queryOptions.subCategory})"
+            ng-click="$ctrl.currentPage = 1; $ctrl.getProducts({category:$ctrl.category,subCategory:$ctrl.queryOptions.subCategory, keyword:'all'})"
             ng-show="$ctrl.queryOptions.subCategory">
             {{$ctrl.queryOptions.subCategory}}
         </span>
