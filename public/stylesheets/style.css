@@ -109,7 +109,7 @@ label {
   height: 40px;
   margin-top: 0;
   padding-left: 15px;
-  /*width: 100vw;*/
+  overflow-x: scroll;
 }
 
 #pl-topbar-results {

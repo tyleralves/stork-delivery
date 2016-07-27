@@ -1,9 +1,19 @@
 <div class="container-fluid">
     <h1>Login</h1>
     <span class="error">{{ $ctrl.message }}</span>
-    <form name="login" ng-submit="$ctrl.logIn();">
-        <input type="text" ng-model="$ctrl.user.username">
-        <input type="password" ng-model="$ctrl.user.password">
-        <button type="submit">Login</button>
-    </form>
+    <div class="row">
+        <div class="col-lg-4 col-xs-12">
+            <form name="login" ng-submit="$ctrl.logIn();">
+                <fieldset class="form-group">
+                    <label for="login-input-user" class="form-control-label">Username:</label>
+                    <input type="text" class="form-control" id="login-input-user" ng-model="$ctrl.user.username">
+                </fieldset>
+                <fieldset class="form-group">
+                    <label for="login-input-pass" class="form-control-label">Username:</label>
+                    <input type="password" class="form-control" id="login-input-pass" ng-model="$ctrl.user.password">
+                </fieldset>
+                <button class="btn btn-default" type="submit">Login</button>
+            </form>
+        </div>
+    </div>
 </div>

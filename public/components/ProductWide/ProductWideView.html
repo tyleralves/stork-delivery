@@ -1,21 +1,21 @@
 <div class="row pw-product-row">
-    <div class="pw-product-col col-md-6">
+    <div class="pw-product-col col-xs-6">
         <div>
             <img class="pw-image" src="{{ $ctrl.product.mediumImage }}">
             <div><a href="" class="product-name-text">{{ $ctrl.product.name }}</a></div>
         </div>
     </div>
-    <div class="pw-product-col col-md-3">
+    <div class="pw-product-col col-xs-3">
         <span class="product-price-text">{{ $ctrl.product.salePrice | currency }}</span>
     </div>
-    <div class="product-selection pw-product-col" ng-class="{'col-md-3': !$ctrl.quantity}" ng-hide="$ctrl.quantity">
+    <div class="product-selection pw-product-col" ng-class="{'col-xs-3': !$ctrl.quantity}" ng-hide="$ctrl.quantity">
         <!-- TODO <label for="product-quantity-{{$ctrl.index}}"></label> -->
         <select ng-model="quantity"
                 ng-options="n for n in [] | range:1:$ctrl.product.quantity<90?$ctrl.product.quantity:90">
         </select>
         <a class="product-cart-btn" ng-click="$ctrl.onProductSelected({product: $ctrl.product, quantity: quantity}); quantity = 0;">+</a>
     </div>
-    <div class="product-selection pw-product-col" ng-class="{'col-md-3': $ctrl.quantity}" ng-show="$ctrl.quantity">
+    <div class="product-selection pw-product-col" ng-class="{'col-xs-3': $ctrl.quantity}" ng-show="$ctrl.quantity">
         <!-- TODO <label for="product-quantity-{{$ctrl.index}}"></label> -->
         <select id="product-quantity-{{$ctrl.index}}"
                 ng-model="$ctrl.quantity"

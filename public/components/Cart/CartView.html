@@ -7,10 +7,10 @@
     </div>
 
     <div class="row cart-title-row" ng-show="$ctrl.cartList.length">
-        <div class="col-md-3 col-md-offset-6">
+        <div class="col-xs-3 col-xs-offset-6">
             <strong>Price</strong>
         </div>
-        <div class="col-md-3 pull-right">
+        <div class="col-xs-3 pull-right">
             <strong>Quantity</strong>
         </div>
     </div>
@@ -24,7 +24,7 @@
             on-quantity-change="$ctrl.changeCartQuantity(product, index, quantity);">
     </product-wide>
     <div class="row cart-title-row" ng-show="$ctrl.cartList.length">
-        <div class="col-md-3 pull-right">
+        <div class="col-xs-3 pull-right">
             <span class="product-price-text">Subtotal: {{$ctrl.cartTotal | currency}}</span>
         </div>
     </div>
