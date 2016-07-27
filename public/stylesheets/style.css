@@ -112,6 +112,12 @@ label {
   overflow-x: scroll;
 }
 
+@media screen and (min-width: 992px){
+  .pl-topbar {
+    overflow-x: hidden;
+  }
+}
+
 #pl-topbar-results {
   background: #FFFFFF;
   display: flex;
