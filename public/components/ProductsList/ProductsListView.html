@@ -30,16 +30,17 @@
             {{$ctrl.queryOptions.subCategory}}
         </span>
         <span ng-show="$ctrl.queryOptions.keyword">:</span>
-        <span class="pl-topbar-link"
-              ng-show="$ctrl.queryOptions.keyword">
-            "{{$ctrl.queryOptions.keyword}}"
+        <span class="pl-topbar-link pl-topbar-label label"
+              ng-show="$ctrl.queryOptions.keyword"
+              ng-click="$ctrl.currentPage = 1; $ctrl.getProducts({category:$ctrl.category,subCategory:$ctrl.queryOptions.subCategory, keyword:'all'})">
+            "{{$ctrl.queryOptions.keyword}}" <span class="pl-topbar-cancel">x</span>
         </span>
     </div>
 </div>
 
 <!-- Main View -->
 <div class="container-fluid">
-    <div class="row" ng-hide="$ctrl.loading">
+    <div class="row" ng-show="$ctrl.loadingFactory.loaded">
         <!-- Refine by -->
         <div class="col-md-2 pl-refine-col">
             <h4 class="pl-refine-heading">Refine by</h4>
@@ -68,7 +69,6 @@
         <div class="col-md-10 section-container product-container">
             <span class="error" ng-show="$ctrl.message">{{ $ctrl.message }}</span>
             <span class="error" ng-show="$ctrl.error">{{ $ctrl.error }}</span>
-            <span class="error" ng-show="$ctrl.loading">{{$ctrl.loading}}</span>
             <div class="row product-row">
                 <product-square
                         class="section-header product"
@@ -81,7 +81,7 @@
         </div>
     </div>
 
-    <div ng-hide="$ctrl.loading">
+    <div ng-show="$ctrl.loadingFactory.loaded">
         <!-- Bootstrap pagination component -->
         <nav class="pagination-nav">
             <ul class="pagination">

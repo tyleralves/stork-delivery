@@ -49,13 +49,22 @@ label {
   height: 50px;
 }
 
+.form-control {
+  width: auto;
+}
+
 .nav-search-col>.input-group {
   margin-top: auto;
   margin-bottom: auto;
 }
 
 .nav-search-input {
-  width: 100%;
+  display: inline-block;
+  width: auto;
+}
+
+.nav-search-button {
+  display: inline-block;
 }
 
 @media screen and (min-width: 992px){
@@ -130,8 +139,18 @@ label {
 }
 
 .pl-topbar-link {
+  color: black;
   cursor: pointer;
   font-weight: 600;
+}
+
+.pl-topbar-label {
+  display: inline-block;
+  border: 1px solid black;
+}
+
+.pl-topbar-cancel {
+  font-weight: 100;
 }
 
 .pl-topbar-heading {
@@ -283,4 +302,33 @@ product-wide >.pw-product-row {
 
 .error {
   color: red;
+}
+
+.loading-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 47vh;
+  width: 100%;
+}
+
+.loading {
+  width: 30px;
+  -webkit-animation:spin 2s linear infinite;
+  -moz-animation:spin 2s linear infinite;
+  animation:spin 2s linear infinite;
+}
+@-moz-keyframes spin { 100% {
+  -moz-transform:rotate(360deg);
+}
+}
+@-webkit-keyframes spin { 100% {
+  -webkit-transform:rotate(360deg);
+}
+}
+@keyframes spin { 100% {
+  -webkit-transform:rotate(360deg);
+  transform:rotate(360deg);
+}
 }

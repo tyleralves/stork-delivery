@@ -1,14 +1,14 @@
 /**
  * Created by Tyler on 5/21/2016.
  */
-function CartController(CartFactory){
+function CartController(CartFactory, LoadingFactory){
   'use strict';
   var ctrl = this;
-  ctrl.loading = "Loading...";
+  ctrl.LoadingFactory = LoadingFactory;
 
   CartFactory.getCart()
     .then(function(){
-      ctrl.loading = null;
+      LoadingFactory.viewLoadedToggle();
       ctrl.cartList = CartFactory.cartList;
       ctrl.cartTotal = CartFactory.cartTotal();
     });

@@ -1,8 +1,10 @@
 /**
  * Created by Tyler on 5/11/2016.
  */
-function ProductsListController(ProductFactory, CartFactory, $window, $location, $scope) {
+function ProductsListController(ProductFactory, CartFactory, LoadingFactory, $window, $location, $scope) {
   var ctrl = this;
+
+  ctrl.loadingFactory = LoadingFactory;
 
   ctrl.productList = ProductFactory.productList;
   ctrl.categories = ProductFactory.categories;
@@ -43,7 +45,7 @@ function ProductsListController(ProductFactory, CartFactory, $window, $location,
     }
     $window.scrollTo(0,0);
     //Temporary loading dialog, removed when productlist is populated
-    ctrl.loading = 'Loading...';
+    LoadingFactory.viewLoadedToggle();
     //Adds queryOptions specified in view to ctrl properties for persistence between search/ filter actions
     for(var prop in queryOptions){
       if(queryOptions.hasOwnProperty(prop)){
@@ -70,13 +72,13 @@ function ProductsListController(ProductFactory, CartFactory, $window, $location,
         if(ProductFactory.categories.length===1){
           ctrl.queryOptions.category = ProductFactory.categories[0];
         }
-        ctrl.loading = false;
+        LoadingFactory.viewLoadedToggle();
       });
   };
   ctrl.getProducts();
 }
 
-ProductsListController.$inject = ['ProductFactory', 'CartFactory', '$window', '$location', '$scope'];
+ProductsListController.$inject = ['ProductFactory', 'CartFactory', 'LoadingFactory', '$window', '$location', '$scope'];
 
 angular
   .module('app')
