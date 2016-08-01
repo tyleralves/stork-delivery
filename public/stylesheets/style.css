@@ -53,18 +53,9 @@ label {
   width: auto;
 }
 
-.nav-search-col>.input-group {
+.nav-search-col>form {
   margin-top: auto;
   margin-bottom: auto;
-}
-
-.nav-search-input {
-  display: inline-block;
-  width: auto;
-}
-
-.nav-search-button {
-  display: inline-block;
 }
 
 @media screen and (min-width: 992px){

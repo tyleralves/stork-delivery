@@ -1,6 +1,10 @@
-<form>
-    <input type="text" class="nav-search-input form-control" placeholder="Search Products" ng-model="$ctrl.keyword">
-    <button class="btn btn-default nav-search-button" id="product-search-input" type="submit" ng-click="$ctrl.addKeyword(ctrl.keyword);">
-        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-    </button>
+<form class="search-form">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search Products" ng-model="$ctrl.keyword">
+        <span class="input-group-btn">
+            <button class="btn btn-default" id="product-search-input" type="submit" ng-click="$ctrl.addKeyword(ctrl.keyword);">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        </button>
+        </span>
+    </div>
 </form>
